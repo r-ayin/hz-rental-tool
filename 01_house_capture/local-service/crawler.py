@@ -10,9 +10,14 @@
 """
 
 from urllib.parse import quote
-from urllib.request import Request, urlopen
+from urllib.request import Request
 import html as html_module
+import http.cookiejar
+import random
 import re
+import time
+import urllib.error
+import urllib.request
 
 BASE_URL = "https://hz.zu.ke.com"
 LIST_PATH = "/zufang/"
@@ -78,6 +83,18 @@ class LoginRequiredError(RuntimeError):
     """目标页面返回了贝壳登录页（匿名请求触发了登录墙/风控）。"""
 
 
+class CaptchaError(RuntimeError):
+    """命中贝壳人机验证页：必须立即停止，改由人工或浏览器扩展通道。"""
+
+
+class RiskControlError(RuntimeError):
+    """被限流/风控（HTTP 403/429）：本轮停止，不重试。"""
+
+
+ACCEPT_LANGUAGE = "zh-CN,zh;q=0.9"
+_OPENER = None
+
+
 def build_list_url(district="", page=1, price_tier=None, rooms=None,
                    rent_type="", keyword="", sort=""):
     """按筛选条件构造 hz.zu.ke.com 列表页 URL。
@@ -112,24 +129,94 @@ def is_login_page(html_text):
     return "ke-passport" in head and "<title>登录</title>" in head
 
 
-def fetch(url, cookie="", timeout=DEFAULT_TIMEOUT):
-    """抓取页面 HTML；命中登录墙抛 LoginRequiredError。"""
+def is_verify_page(html_text):
+    """判断响应是否为人机验证页（与登录页区分：标题含 人机/验证）。"""
+    head = (html_text or "")[:4000]
+    title_match = re.search(r"<title>(.*?)</title>", head, re.S)
+    title_text = (title_match.group(1) if title_match else "").strip()
+    if "人机" in title_text or ("验证" in title_text and "登录" not in title_text):
+        return True
+    return 'content="CAPTCHA' in head or 'content="VERIFY' in head
+
+
+def build_headers(referer="", cookie=""):
+    """真实浏览器风格请求头。
+
+    同一进程内 UA/头保持一致（每请求轮换反而更像机器人）；
+    带 Sec-Fetch-* 导航头，翻页时带上一页 Referer，贴近真人浏览轨迹。
+    """
     headers = {
         "User-Agent": USER_AGENT,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "zh-CN,zh;q=0.9",
-        "Referer": BASE_URL + LIST_PATH,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": ACCEPT_LANGUAGE,
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin" if referer else "none",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
     }
+    if referer:
+        headers["Referer"] = referer
     if cookie:
         headers["Cookie"] = cookie.strip()
-    request = Request(url, headers=headers)
-    with urlopen(request, timeout=timeout) as response:
-        html_text = response.read().decode("utf-8", errors="replace")
+    return headers
+
+
+def backoff_delay(attempt, base=2.0):
+    """指数退避 + 抖动：2s/4s/8s 基础上加随机，避免重试节奏整齐。"""
+    return base * (2 ** attempt) + random.uniform(0.3, 1.2)
+
+
+def _get_opener():
+    """带 CookieJar 的 opener：复用服务端下发的会话 Cookie（如风控 token），贴近真实浏览器。"""
+    global _OPENER
+    if _OPENER is None:
+        jar = http.cookiejar.CookieJar()
+        _OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+    return _OPENER
+
+
+def fetch(url, cookie="", timeout=DEFAULT_TIMEOUT, referer="", max_attempts=3):
+    """抓取页面 HTML。
+
+    防护策略：
+    - 403/429 → RiskControlError 立即停（三振出局，不硬撞）；
+    - 5xx/网络错误 → 指数退避重试，最多 max_attempts 次；
+    - 登录墙 → LoginRequiredError；人机验证 → CaptchaError。
+    """
+    opener = _get_opener()
+    html_text = ""
+    for attempt in range(max_attempts):
+        request = Request(url, headers=build_headers(referer=referer, cookie=cookie))
+        try:
+            with opener.open(request, timeout=timeout) as response:
+                html_text = response.read().decode("utf-8", errors="replace")
+            break
+        except urllib.error.HTTPError as error:
+            if error.code in (403, 429):
+                raise RiskControlError(
+                    f"HTTP {error.code}：触发限流/风控，本轮抓取已停止。"
+                    "请降低频率（减少页数/加大间隔）或改用浏览器扩展通道。"
+                ) from error
+            if error.code >= 500 and attempt + 1 < max_attempts:
+                time.sleep(backoff_delay(attempt))
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError, OSError) as error:
+            if attempt + 1 < max_attempts:
+                time.sleep(backoff_delay(attempt))
+                continue
+            raise
     if is_login_page(html_text):
         raise LoginRequiredError(
             "页面要求登录（贝壳对分页/筛选/详情页有登录墙）。"
             "请在 local-service/data/cookie.txt 或检索面板中提供已登录浏览器的 Cookie，"
             "或改用浏览器扩展在已登录页面内采集。"
+        )
+    if is_verify_page(html_text):
+        raise CaptchaError(
+            "命中贝壳人机验证页：立即停止自动抓取。"
+            "请稍后重试、降低频率，或改用浏览器扩展在人工会话内采集。"
         )
     return html_text
 
@@ -296,6 +383,7 @@ def crawl(filters=None, pages=1, cookie="", timeout=DEFAULT_TIMEOUT,
     pages = max(1, min(int(pages or 1), 30))
 
     summary = {"fetched": 0, "houses": [], "pages": []}
+    referer = ""
     for offset in range(pages):
         page = start_page + offset
         url = build_list_url(
@@ -307,7 +395,8 @@ def crawl(filters=None, pages=1, cookie="", timeout=DEFAULT_TIMEOUT,
             keyword=filters.get("keyword") or "",
             sort=filters.get("sort") or "",
         )
-        html_text = fetch(url, cookie=cookie, timeout=timeout)
+        html_text = fetch(url, cookie=cookie, timeout=timeout, referer=referer)
+        referer = url
         result = parse_list_page(html_text)
         result["url"] = url
         result["page"] = page
@@ -320,6 +409,9 @@ def crawl(filters=None, pages=1, cookie="", timeout=DEFAULT_TIMEOUT,
         if total_page and page >= min(total_page, 100):
             break
         if offset + 1 < pages and sleep_seconds:
-            import time
-            time.sleep(sleep_seconds)
+            # 人类化间隔：基础间隔 + 随机抖动；每翻 5 页额外"休息"一段
+            pause = sleep_seconds + random.uniform(0.5, 2.0)
+            if (offset + 1) % 5 == 0:
+                pause += random.uniform(3.0, 6.0)
+            time.sleep(pause)
     return summary

@@ -87,5 +87,39 @@ class BuildUrlTest(unittest.TestCase):
         self.assertEqual(xihu["slug"], "xihuqu4")
 
 
+class PolitenessAndAntiDetectionTest(unittest.TestCase):
+    """反检测/礼貌抓取行为测试。"""
+
+    def test_verify_page_detection(self):
+        self.assertTrue(crawler.is_verify_page("<html><head><title>人机验证</title></head></html>"))
+        self.assertTrue(crawler.is_verify_page('<meta name="ke-passport" content="CAPTCHA"/><title>验证</title>'))
+        # 登录页走 LoginRequired 分支，不与人机验证混淆
+        self.assertFalse(crawler.is_verify_page('<meta name="ke-passport" content="LOGIN"/><title>登录</title>'))
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        self.assertFalse(crawler.is_verify_page(fixture))
+
+    def test_backoff_monotonic_with_jitter(self):
+        for _ in range(20):
+            delays = [crawler.backoff_delay(a) for a in range(4)]
+            self.assertEqual(delays, sorted(delays))
+            self.assertGreater(delays[0], 2.0)
+            self.assertLess(delays[0], 3.5)
+
+    def test_headers_browser_like(self):
+        headers = crawler.build_headers()
+        self.assertEqual(headers["Sec-Fetch-Mode"], "navigate")
+        self.assertEqual(headers["Sec-Fetch-Site"], "none")
+        self.assertNotIn("Referer", headers)
+        with_ref = crawler.build_headers(referer="https://hz.zu.ke.com/zufang/")
+        self.assertEqual(with_ref["Sec-Fetch-Site"], "same-origin")
+        self.assertEqual(with_ref["Referer"], "https://hz.zu.ke.com/zufang/")
+        with_cookie = crawler.build_headers(cookie="lianjia_uuid=abc")
+        self.assertEqual(with_cookie["Cookie"], "lianjia_uuid=abc")
+
+    def test_risk_control_errors_exist(self):
+        for cls in (crawler.LoginRequiredError, crawler.CaptchaError, crawler.RiskControlError):
+            self.assertTrue(issubclass(cls, RuntimeError))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

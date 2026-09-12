@@ -11,7 +11,6 @@
 
   const AUTO_PAGE_KEY = "ke-rental-auto-page";
   const MAX_AUTO_PAGES = 30;
-  const PAGE_DELAY_MS = 2500;
 
   const isDetailPage = /^\/(zufang|apartment)\/[A-Za-z0-9]+\.html/.test(location.pathname);
 
@@ -58,6 +57,29 @@
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  /* 人类化延迟：区间内随机，避免机器节奏 */
+  function humanDelay(minMs, maxMs) {
+    return minMs + Math.random() * (maxMs - minMs);
+  }
+
+  /* 检测是否落到人机验证/拦截页：命中则停止自动化并提示 */
+  function detectBlockPage() {
+    const title = document.title || "";
+    if (title.includes("人机") || (title.includes("验证") && !title.includes("登录"))) return true;
+    return !!document.querySelector("#captcha, .verify-container");
+  }
+
+  /* 采集前模拟真人浏览：分段滚动阅读再回顶部 */
+  async function simulateReading() {
+    const steps = 3 + Math.floor(Math.random() * 3);
+    for (let i = 0; i < steps; i += 1) {
+      window.scrollBy({ top: window.innerHeight * (0.6 + Math.random() * 0.5), behavior: "smooth" });
+      await sleep(260 + Math.random() * 420);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    await sleep(200 + Math.random() * 300);
+  }
+
   function normalizeLine(value) {
     return (value || "").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
   }
@@ -68,6 +90,7 @@
   }
 
   async function saveHouses(houses) {
+    await sleep(humanDelay(300, 900)); // 提交前停顿，贴近人工操作节奏
     const response = await browser.runtime.sendMessage({ type: "saveHousesToLocal", houses });
     if (!response || !response.ok) {
       throw new Error((response && response.error) || "本地服务未响应");
@@ -203,6 +226,10 @@
   }
 
   async function runAutoPaging(button) {
+    if (detectBlockPage()) {
+      alert("当前页面是人机验证/拦截页，已停止自动采集。请人工完成验证后重试。");
+      return;
+    }
     const pagination = readPagination();
     if (pagination) {
       sessionStorage.setItem(AUTO_PAGE_KEY, JSON.stringify({
@@ -213,9 +240,10 @@
     }
     setButtonState(button, "采集中", true);
     try {
+      await simulateReading();
       const count = await captureCurrentListPage(button);
       setButtonState(button, `已采${count}条`, true);
-      await sleep(PAGE_DELAY_MS);
+      await sleep(humanDelay(2000, 4500));
       const nextUrl = buildNextUrl(readPagination());
       if (nextUrl && sessionStorage.getItem(AUTO_PAGE_KEY)) {
         setButtonState(button, "翻页中", true);
@@ -232,6 +260,10 @@
   }
 
   async function resumeAutoPaging() {
+    if (detectBlockPage()) {
+      sessionStorage.removeItem(AUTO_PAGE_KEY);
+      return;
+    }
     const raw = sessionStorage.getItem(AUTO_PAGE_KEY);
     if (!raw) return;
     let state;
@@ -245,7 +277,8 @@
       sessionStorage.removeItem(AUTO_PAGE_KEY);
       return;
     }
-    await sleep(1800);
+    await sleep(humanDelay(1500, 3000));
+    await simulateReading();
     const houses = collectListPage();
     if (houses.length) {
       try {

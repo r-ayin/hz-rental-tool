@@ -14,6 +14,8 @@ import mimetypes
 import os
 import re
 import sqlite3
+import threading
+import time
 
 import crawler
 
@@ -26,6 +28,9 @@ JSONL_PATH = DATA_DIR / "houses.jsonl"
 COOKIE_PATH = DATA_DIR / "cookie.txt"
 PUBLIC_DIR = Path(__file__).resolve().parent / "public"
 MAX_CRAWL_PAGES = 30
+MIN_CRAWL_INTERVAL = 5.0  # 两次检索启动的最小间隔（秒），防风控
+_crawl_lock = threading.Lock()
+_last_crawl_start = 0.0
 
 SORT_SQL = {
     "updated": "updated_at DESC, id DESC",
@@ -288,7 +293,27 @@ def read_saved_cookie():
 
 
 def run_crawl(payload):
-    """服务端在线检索：抓取 hz.zu.ke.com 列表页并入库。"""
+    """服务端在线检索：抓取 hz.zu.ke.com 列表页并入库。
+
+    防护：同一时刻只允许一个检索任务（锁），两次启动间隔 >= MIN_CRAWL_INTERVAL；
+    登录墙/人机验证/限流分别返回可操作的错误码，绝不静默重试硬撞。
+    """
+    global _last_crawl_start
+    if not _crawl_lock.acquire(blocking=False):
+        return {"ok": False, "error": "busy", "message": "已有检索任务在执行，请等它结束再试。"}
+    try:
+        now = time.monotonic()
+        wait = MIN_CRAWL_INTERVAL - (now - _last_crawl_start)
+        if wait > 0:
+            return {"ok": False, "error": "too_soon",
+                    "message": f"检索过于频繁，请 {int(wait) + 1} 秒后再试（防风控间隔）。"}
+        _last_crawl_start = now
+        return _run_crawl_locked(payload)
+    finally:
+        _crawl_lock.release()
+
+
+def _run_crawl_locked(payload):
     filters = {
         "district": str(payload.get("district") or ""),
         "priceTier": payload.get("priceTier") or None,
@@ -320,6 +345,10 @@ def run_crawl(payload):
                     district=filters["district"], page=1, price_tier=filters["priceTier"],
                     rooms=filters["rooms"], rent_type=filters["rentType"],
                     keyword=filters["keyword"], sort=filters["sort"])}
+    except crawler.CaptchaError as error:
+        return {"ok": False, "error": "captcha", "message": str(error)}
+    except crawler.RiskControlError as error:
+        return {"ok": False, "error": "risk_control", "message": str(error)}
     except Exception as error:
         return {"ok": False, "error": "crawl_failed", "message": f"{type(error).__name__}: {error}"}
 
