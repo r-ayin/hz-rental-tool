@@ -205,6 +205,7 @@ function render(houses) {
 }
 
 let cachedHouses = [];
+let currentHouse = null;
 
 async function openDetail(id) {
   try {
@@ -217,6 +218,7 @@ async function openDetail(id) {
       house = cachedHouses.find((item) => String(item.id) === String(id));
     }
     if (!house) return;
+    currentHouse = house;
     renderDetail(house);
     detailDialog.showModal();
   } catch (error) {
@@ -264,11 +266,44 @@ function renderDetail(house) {
 
     ${tags.length ? `<section class="detail-section"><h3>标签</h3><div class="card-tags">${tags.map((tag) => `<span class="tag-chip">${escapeHtml(tag)}</span>`).join("")}</div></section>` : ""}
 
+    ${visionSection(house)}
+
     <section class="detail-section">
       <h3>房源描述</h3>
       <p class="detail-desc">${escapeHtml(house.description || "暂无描述（详情页需登录后用扩展「保存房源」抓取）")}</p>
     </section>
   `;
+}
+
+function visionSection(house) {
+  let report = null;
+  try {
+    report = house.vision_report ? JSON.parse(house.vision_report) : null;
+  } catch {
+    report = null;
+  }
+  if (!report) {
+    return `<section class="detail-section"><h3>视觉评估</h3>
+      <button id="visionBtn" class="primary-button" type="button">用视觉模型评分标注（qwen3.8-flash）</button>
+      <span id="visionStatus" class="crawl-status"></span></section>`;
+  }
+  const views = (report.window_view || []).join(" / ") || "未见";
+  return `<section class="detail-section">
+    <h3>视觉评估 <span class="spec-label">${report.photos_analyzed || "?"} 张照片 · ${escapeHtml(report.model || "")}</span></h3>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="spec-label">新旧</span><span class="spec-value">${report.newness ?? "-"}/5</span></div>
+      <div class="spec-item"><span class="spec-label">装修</span><span class="spec-value">${report.decoration ?? "-"}/5</span></div>
+      <div class="spec-item"><span class="spec-label">整洁</span><span class="spec-value">${report.cleanliness ?? "-"}/5</span></div>
+      <div class="spec-item"><span class="spec-label">厨房</span><span class="spec-value">${escapeHtml(report.kitchen || "未见")}</span></div>
+      <div class="spec-item"><span class="spec-label">卫生间</span><span class="spec-value">${escapeHtml(report.bathroom || "未见")}</span></div>
+      <div class="spec-item"><span class="spec-label">窗外</span><span class="spec-value">${escapeHtml(views)}</span></div>
+    </div>
+    <div class="card-tags" style="margin-top:8px">
+      ${(report.highlights || []).map((t) => `<span class="tag-chip">✓ ${escapeHtml(t)}</span>`).join("")}
+      ${(report.issues || []).map((t) => `<span class="tag-chip" style="background:rgba(255,90,60,.12);color:#d84a2f">! ${escapeHtml(t)}</span>`).join("")}
+    </div>
+    <p class="detail-desc" style="margin-top:8px">${escapeHtml(report.summary || "")}</p>
+  </section>`;
 }
 
 async function runCrawl() {
@@ -347,6 +382,27 @@ crawlToggle.addEventListener("click", openCrawlDialog);
 closeCrawlDialog.addEventListener("click", () => crawlDialog.close());
 crawlStart.addEventListener("click", runCrawl);
 closeDialog.addEventListener("click", () => detailDialog.close());
+
+detailContent.addEventListener("click", async (event) => {
+  if (event.target.id !== "visionBtn" || !currentHouse) return;
+  const status = detailContent.querySelector("#visionStatus");
+  event.target.disabled = true;
+  if (status) status.textContent = "评分中（下载照片 + 视觉模型，约 10-40 秒）...";
+  try {
+    const response = await fetch("/api/vision", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: currentHouse.url })
+    });
+    const data = await response.json();
+    if (!data.ok) throw new Error(data.message || data.error);
+    currentHouse.vision_report = JSON.stringify(data.report);
+    renderDetail(currentHouse);
+  } catch (error) {
+    if (status) status.textContent = `评分失败：${error.message || error}`;
+    event.target.disabled = false;
+  }
+});
 
 applyTheme(localStorage.getItem(themeKey) || "base1");
 (async function init() {

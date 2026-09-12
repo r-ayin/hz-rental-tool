@@ -415,3 +415,16 @@ def crawl(filters=None, pages=1, cookie="", timeout=DEFAULT_TIMEOUT,
                 pause += random.uniform(3.0, 6.0)
             time.sleep(pause)
     return summary
+
+
+def parse_detail_images(html_text):
+    """提取详情页照片 URL（ke-image 图床），去重保序，最多 12 张。"""
+    urls = []
+    for match in re.finditer(r'<img[^>]+(?:data-src|src)="(https?://[^"]+)"', html_text):
+        url = match.group(1)
+        if "ljcdn.com" not in url:
+            continue
+        base = url.split("!")[0]
+        if base not in urls:
+            urls.append(base)
+    return urls[:12]

@@ -18,6 +18,7 @@ import threading
 import time
 
 import crawler
+import vision
 
 HOST = "127.0.0.1"
 PORT = int(os.environ.get("RENTAL_PORT") or 8765)
@@ -79,6 +80,9 @@ def ensure_storage():
             )
             """
         )
+        columns = [row[1] for row in conn.execute("PRAGMA table_info(houses)").fetchall()]
+        if "vision_report" not in columns:
+            conn.execute("ALTER TABLE houses ADD COLUMN vision_report TEXT")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_houses_district ON houses(district)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_houses_community ON houses(community)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_houses_rent ON houses(rent_monthly)")
@@ -445,7 +449,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlparse(self.path).path
-        if path not in ("/api/houses", "/api/crawl"):
+        if path not in ("/api/houses", "/api/crawl", "/api/vision"):
             self.send_json(404, {"ok": False, "error": "not found"})
             return
 
@@ -468,11 +472,61 @@ class Handler(BaseHTTPRequestHandler):
                     payloads = [payload]
                 saved, records = save_houses(payloads)
                 self.send_json(200, {"ok": True, "saved": saved, "houses": records})
-            else:
+            elif path == "/api/crawl":
                 result = run_crawl(payload if isinstance(payload, dict) else {})
                 self.send_json(200 if result.get("ok") else 409, result)
+            else:
+                self.handle_vision(payload if isinstance(payload, dict) else {})
         except Exception as error:
             self.send_json(400, {"ok": False, "error": str(error)})
+
+
+    def handle_vision(self, payload):
+        """视觉评估：取房源照片（库内或抓详情页）→ 视觉模型打分标注 → 存 vision_report。"""
+        url = str(payload.get("url") or "")
+        house_id = payload.get("house_id")
+        with sqlite3.connect(DB_PATH) as conn:
+            conn.row_factory = sqlite3.Row
+            if url:
+                row = conn.execute("SELECT * FROM houses WHERE url = ?", (url,)).fetchone()
+            else:
+                row = conn.execute("SELECT * FROM houses WHERE id = ?", (house_id,)).fetchone()
+        if not row:
+            self.send_json(404, {"ok": False, "error": "house not found"})
+            return
+        row = dict(row)
+        images = json.loads(row.get("images") or "[]")
+        if not images:
+            cookie = read_saved_cookie()
+            if not cookie:
+                self.send_json(409, {"ok": False, "error": "no_images",
+                                     "message": "库内无详情页照片，且无 Cookie 可抓详情页"})
+                return
+            try:
+                html_text = crawler.fetch(row["url"], cookie=cookie,
+                                          referer="https://hz.zu.ke.com/zufang/")
+            except Exception as error:
+                self.send_json(409, {"ok": False, "error": "detail_fetch_failed",
+                                     "message": str(error)[:200]})
+                return
+            images = crawler.parse_detail_images(html_text)
+            with sqlite3.connect(DB_PATH) as conn:
+                conn.execute("UPDATE houses SET images = ? WHERE id = ?",
+                             (json.dumps(images, ensure_ascii=False), row["id"]))
+        if not images:
+            self.send_json(409, {"ok": False, "error": "no_images",
+                                 "message": "详情页未解析到照片"})
+            return
+        try:
+            report = vision.analyze_images(images)
+        except Exception as error:
+            self.send_json(502, {"ok": False, "error": "vision_failed",
+                                 "message": str(error)[:200]})
+            return
+        with sqlite3.connect(DB_PATH) as conn:
+            conn.execute("UPDATE houses SET vision_report = ? WHERE id = ?",
+                         (json.dumps(report, ensure_ascii=False), row["id"]))
+        self.send_json(200, {"ok": True, "report": report, "images": len(images)})
 
 
 def main():

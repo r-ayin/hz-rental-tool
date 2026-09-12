@@ -105,6 +105,15 @@ hz-rental-tool/
 
 原则：**被拦即停、给出可操作提示**，绝不静默重试或换端点硬撞；全量筛选检索优先走已登录浏览器扩展通道。
 
+## 视觉评估（qwen3.8-flash）
+
+对房源照片自动打分与标注：新旧/装修/整洁（1-5 分）、明厨/暗厨、明卫/暗卫、窗外景观（树景/城景/无视野）、亮点与问题清单、一句话总评。
+
+- 触发：前端详情弹窗「视觉评估」区一键评分；或 `POST /api/vision {"url": ...}`；批量 `python3 scripts/vision_batch.py urls.txt`
+- 照片来源：库内已有详情图，否则用已存 Cookie 抓详情页解析（`crawler.parse_detail_images`）
+- 配置：`VISION_API_BASE` / `VISION_API_KEY` / `VISION_MODEL` 环境变量；默认 idealab Anthropic 网关 + `~/.idealab.env` 的 AK + `qwen3.8-flash`
+- 结果存 `houses.vision_report`；模型只依据照片可见证据判断，房东传非实拍图（营业执照/二维码等）会明确标注无法评估
+
 ## 测试
 
 ```bash
