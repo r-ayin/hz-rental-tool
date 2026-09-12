@@ -139,6 +139,12 @@ def is_verify_page(html_text):
     return 'content="CAPTCHA' in head or 'content="VERIFY' in head
 
 
+def is_waf_page(html_text):
+    """贝壳 WAF 拦截页（403 Forbidden / 访问已被拦截）。"""
+    head = (html_text or "")[:2000]
+    return "<title>Forbidden</title>" in head and "访问已被拦截" in head
+
+
 def build_headers(referer="", cookie=""):
     """真实浏览器风格请求头。
 
@@ -217,6 +223,11 @@ def fetch(url, cookie="", timeout=DEFAULT_TIMEOUT, referer="", max_attempts=3):
         raise CaptchaError(
             "命中贝壳人机验证页：立即停止自动抓取。"
             "请稍后重试、降低频率，或改用浏览器扩展在人工会话内采集。"
+        )
+    if is_waf_page(html_text):
+        raise RiskControlError(
+            "命中贝壳 WAF 拦截（403 访问已被拦截）：频率过高被风控。"
+            "请降低并发/加大间隔后重试。"
         )
     return html_text
 

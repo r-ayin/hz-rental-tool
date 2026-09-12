@@ -28,10 +28,13 @@ DB_PATH = DATA_DIR / "houses.db"
 JSONL_PATH = DATA_DIR / "houses.jsonl"
 COOKIE_PATH = DATA_DIR / "cookie.txt"
 PUBLIC_DIR = Path(__file__).resolve().parent / "public"
-MAX_CRAWL_PAGES = 30
-MIN_CRAWL_INTERVAL = 5.0  # 两次检索启动的最小间隔（秒），防风控
+MAX_CRAWL_PAGES = 10
+MIN_CRAWL_INTERVAL = 60.0  # 两次检索启动的最小间隔（秒），防风控
+DAILY_PAGE_CAP = 30  # 单日抓取页数上限（防封护栏）
 _crawl_lock = threading.Lock()
 _last_crawl_start = 0.0
+_pages_today = 0
+_day_key = ""
 
 SORT_SQL = {
     "updated": "updated_at DESC, id DESC",
@@ -312,6 +315,15 @@ def run_crawl(payload):
             return {"ok": False, "error": "too_soon",
                     "message": f"检索过于频繁，请 {int(wait) + 1} 秒后再试（防风控间隔）。"}
         _last_crawl_start = now
+        global _pages_today, _day_key
+        today = time.strftime("%Y-%m-%d")
+        if _day_key != today:
+            _day_key, _pages_today = today, 0
+        pages_req = max(1, min(int(payload.get("pages") or 1), MAX_CRAWL_PAGES))
+        if _pages_today + pages_req > DAILY_PAGE_CAP:
+            return {"ok": False, "error": "daily_cap",
+                    "message": f"单日页数上限 {DAILY_PAGE_CAP} 页（已用 {_pages_today}）。防封护栏：明天再试，或改用扩展人工节奏采集。"}
+        _pages_today += pages_req
         return _run_crawl_locked(payload)
     finally:
         _crawl_lock.release()
