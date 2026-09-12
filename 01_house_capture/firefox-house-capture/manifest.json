@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "贝壳租房采集",
+  "version": "1.0.0",
+  "description": "在 hz.zu.ke.com 采集租房房源（列表页批量采集/自动翻页，详情页保存），存入本地租房服务。",
+  "permissions": [
+    "downloads",
+    "activeTab",
+    "https://hz.zu.ke.com/*",
+    "http://127.0.0.1:8765/*",
+    "http://localhost:8765/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://hz.zu.ke.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ke-rental-capture@example.local"
+    }
+  }
+}

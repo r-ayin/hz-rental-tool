@@ -1,0 +1,3109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Content-language" content="zh-CN" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="applicable-device" content="pc">
+  <meta http-equiv="Cache-Control" content="no-transform " />
+
+  <!-- seo关键字相关信息 -->
+  <meta name="description" content="贝壳杭州租房网,提供真实的杭州租房信息、出租房源信息、租房价格,包括杭州整租、合租、公寓出租等信息,以及杭州房屋出租个人信息、经纪人信息、品牌公寓信息等.找租房房源,就来杭州贝壳租房!">
+  <meta name="keywords" content="杭州租房信息,杭州出租房网,杭州房屋出租价格">
+  <title>杭州租房信息_杭州出租房源|房屋出租价格【杭州贝壳租房】</title>
+
+  
+
+  <!--地址信息-->
+  <meta name="location" content="province=浙江;city=杭州">
+
+  <!-- 网站ico图标 -->
+    <link href="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/img/favicon.ico?_v=202608311708077aa" type="image/x-icon" rel="icon">
+
+    <meta name=""mobile-agent content="format=[wml|xhtml|html5];url=https://m.ke.com/chuzu/hz/zufang/" />
+  <link rel="alternate" media="only screen and (max-width:640px)" href="https://m.ke.com/chuzu/hz/zufang/">
+  
+    <!-- 是否需要加载common.css -->
+  <link rel="stylesheet" href="https://s1.ljcdn.com/matrix_pc/dist/pc/src/common/css/common.css?_v=202608311708077aa">
+  
+  <!-- 载入灯塔 -->
+  <!-- 接入灯塔 -->
+<script src='//file.ljcdn.com/fee/index.js' crossorigin="anonymous"></script>
+<script>
+  // 获取cookie信息
+  function getCookie(name){
+    var cookies=document.cookie.split('; ');
+    for(var i=0;i<cookies.length;i++){
+      var crumb=cookies[i].split('=');
+      if(name===crumb[0]){
+        return crumb[1]
+      }
+    }
+    return ''
+  }
+  // 灯塔加载完成后的回调函数
+  ;;(function DT(){
+    var uuid=getCookie('lianjia_uuid')
+    var envMap = {
+      dev: 'testing',
+      test: 'testing',
+      preview: 'preview',
+      prod: 'production',
+    };
+    window.dt && dt.set({
+      pid: 'rent_fe_pc', // [必填]项目id, 由灯塔项目组统一分配
+      uuid: uuid,
+      env: envMap['prod'],
+      ucid: uuid, // [可选]用户ucid, 用于发生异常时追踪用户信息, 一般在cookie中可以取到, 没有可传空字符串
+      is_test: Boolean(''), // 是否为测试数据, 默认为false(测试模式下打点数据仅供浏览, 不会展示在系统中)
+      record: {
+        time_on_page: true, // 是否监控用户在线时长数据, 默认为true
+        performance: true, // 是否监控页面载入性能, 默认为true
+        js_error: true, //  是否监控页面报错信息, 默认为true
+        // 配置需要监控的页面报错类别, 仅在js_error为true时生效, 默认均为true(可以将配置改为false, 以屏蔽不需要上报的错误类别)
+        js_error_report_config: {
+          ERROR_RUNTIME: true, // js运行时报错
+          ERROR_SCRIPT: true, // js资源加载失败
+          ERROR_STYLE: true, // css资源加载失败
+          ERROR_IMAGE: false, // 图片资源加载失败
+          ERROR_AUDIO: true, // 音频资源加载失败
+          ERROR_VIDEO: true, // 视频资源加载失败
+          ERROR_CONSOLE: false, // vue运行时报错
+          ERROR_TRY_CATCH: true,
+          checkErrorNeedReport: function(desc, stack){
+            // 外网内容不上报
+            if (!/\/\/(s1\.ljcdn\.com\/)/.test(desc) && !/\/\/(s1\.ljcdn\.com\/)/.test(stack)) {
+              return false;
+            }
+
+            // 是否上报错误，默认为上报
+            var needReport = true
+
+            // 报错是否是从IMSDK中报出的
+            var isThrowFromIM = (desc.indexOf('web-im-sdk') > -1)
+
+            // desc 命中以下关键字的其中一个，即过滤掉，不上报错误，注： 从从IMSDK中报出的（第一类）
+            var filterStr = ['未登录', '/msg/sync ajax fail', '登录令牌缺失', 'Session服务出错', 'Uncaught ReferenceError', '行为异常','keRiskControl']
+
+            // desc 命中以下关键字的其中一个，即可过滤掉，不上报信息，注： 并不是从从IMSDK中报出的（第二类）
+            var filterStr2 = ['MyAppGetHTMLElementsAtPoint', 'vivoNewsDetailPage', 'Script error']
+
+            //是否在desc中命中了关键字符串
+            var hitKeyStr = false // 第一类
+            var hitKeyStr2 = false // 第二类
+
+            var i = 0, len = filterStr.length;
+            for(; i < len; i++){
+              if(desc.indexOf(filterStr[i]) > -1){
+                hitKeyStr = true
+                break
+              }
+            }
+
+            var j = 0, len2 = filterStr2.length;
+            for(; j < len2; j++){
+              if(desc.indexOf(filterStr2[j]) > -1){
+                hitKeyStr2 = true
+                break
+              }
+            }
+
+            // 错误是从IM中抛出，并且错误信息包含登录等内容时,或者命中第二类关键词，过滤掉，不上报
+            if((isThrowFromIM && hitKeyStr) || hitKeyStr2){
+              needReport = false
+            }
+
+            return needReport
+          }
+        }
+      },
+      version: '1.0.0',
+      getPageType: function (location) {
+        return location.host + location.pathname
+      }
+    })
+  })()
+</script>
+
+    <!-- 载入后台返回的css文件 -->
+  <link rel="stylesheet" href="https://s1.ljcdn.com/matrix_pc/dist/pc/src/page/list/index.css?_v=202608311708077aa">
+  
+  
+  <!-- 预置全局变量 -->
+  <script>
+    var g_conf = {}
+  </script>
+</head>
+
+<body>
+
+  <!-- 载入低版本浏览器样式 -->
+  <style>
+  .browser__low{height:100%;overflow:hidden}.browser__low--wrapper,.browser__low--inner{display:none}.browser__low .browser__low--wrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:199999;background:#000;opacity:.5;filter:alpha(opacity=50);display:block}.browser__low .browser__low--inner{background:#fff;position:absolute;left:50%;top:50%;z-index:19999999;width:360px;height:100px;margin-top:-90px;margin-left:-200px;padding:40px 20px;display:block}.browser__low .browser__low--inner p{font-size:20px;padding-bottom:40px}.browser__low .browser__low--inner a{display:inline-block;color:#fff;background:#2ab78e;padding:10px 6px}
+
+</style>
+<div class="browser__low--wrapper"></div>
+<div class="browser__low--inner">
+  <p>您的浏览器版本过低，请升级：</p>
+  <a href="https://www.baidu.com/s?wd=chrome" target="_blank">谷歌 Chrome浏览器</a>
+</div>
+<script>
+;;(function() {
+  if(!([].forEach)) {
+    document.body.className += ' browser__low'
+  }
+})()
+</script>
+
+
+  <div class="wrapper">
+     <link href='//s1.ljcdn.com/feroot/pc/asset/lianjiaIM/css/lianjiaim.css?v=15212312340214' property='stylesheet' rel="stylesheet">
+
+<div>
+  <!-- 顶部总站导航 -->
+  <div class="header ">
+  <ul class="header__wrapper w1150 clear typeUserInfo" id="top">
+                      <li class="header__item fl" >
+          <a href="//hz.ke.com" target="_blank">首页</a>
+        </li>
+                        <li class="header__item fl" >
+          <a href="//hz.ke.com/ershoufang/" target="_blank">二手房</a>
+        </li>
+                        <li class="header__item fl" >
+          <a href="//hz.fang.ke.com/loupan/" target="_blank">新房</a>
+        </li>
+                        <li class="header__item fl cur" >
+          <a href="/zufang/" target="_blank">租房</a>
+        </li>
+                        <li class="header__item fl" >
+          <a href="//hz.ke.com/xiaoqu/" target="_blank">小区</a>
+        </li>
+                        <li class="header__item fl publish-house" data-event_id="20383">
+          <a href="//hz.ke.com/yezhu/maifang/" target="_blank">发布房源</a>
+        </li>
+                        <li class="header__item fl download">
+          <a href="javascript:;" target="_blank">下载APP</a>
+          <div class="download__box">
+            <img src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/img/getDownloadQr.png?_v=202608311708077aa" alt="下载贝壳APP">
+          </div>
+        </li>
+                                  <li class="header__item fl">
+            <a href="https://open.ke.com/home?source=4" target="_blank">贝壳开放平台</a>
+          </li>
+                          <li class="header__aside fr pointer typeShowUser" data-el="login" data-event_id="10794" data-event_action="target=login">
+      <span data-el="login_box">
+        <span data-el="btn_login" data-id="dialog_tel" class="btn-login">登录</span>/<span class="btn-resgiter" data-el="register" data-id="dialog_reg">注册</span>
+      </span>
+    </li>
+    <li class="top__aside fr hide" data-el="user_box">
+      <a href="" data-el="userName">18****87</a>
+      <a data-el="logout_btn">退出</a>
+      <div class="menu-pop">
+        <i class="allow"></i>
+        <ul class="menu-list ">
+          <li class="menu-item"><a href="/zufang/users/index?cur_type=attention" target="_blank">我的关注</a></li>
+          <li class="menu-item"><a href="/zufang/users/index?cur_type=contact" target="_blank">最近联系</a></li>
+          <li class="menu-item"><a href="/zufang/users/index?cur_type=scan" target="_blank">浏览记录</a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+
+</div>
+
+  <div class="search__area">
+    <!-- 租房导航 -->
+  <div class="beike__nav">
+  <a class="beike__nav--logo" href="/zufang/"></a>
+
+  
+  <ul class="beike__nav--tab">
+    <li>
+      <a
+        class="cur"
+        href="/zufang/"
+        data-event_id="25754"
+        exposure-event_id="25753"
+        exposure-event_action="click_name=首页"
+        data-event_action="click_name=首页"
+        data-event_position="click_name"
+        exposure-event_position="click_name">首页</a>
+    </li>
+
+    <li>
+      <a
+      class=""
+      href="/zufang/rt200600000001/"
+      data-event_id="25754"
+      exposure-event_id="25753"
+      exposure-event_action="click_name=整租"
+      data-event_action="click_name=整租"
+      data-event_position="click_name"
+      exposure-event_position="click_name">整租</a>
+    </li>
+
+    <li>
+      <a
+      class=""
+      href="/zufang/rt200600000002/"
+      data-event_id="25754"
+      exposure-event_id="25753"
+      exposure-event_action="click_name=合租"
+      data-event_action="click_name=合租"
+      data-event_position="click_name"
+      exposure-event_position="click_name">合租</a></li>
+
+    <li>
+      <a
+      href="/zufang/proprietor/offer?city_id=330100&city_name=杭州&position=rent_pc_toptbar_rent"
+      data-event_id="25754"
+      exposure-event_id="25753"
+      exposure-event_action="click_name=发布房源"
+      data-event_action="click_name=发布房源"
+      data-event_position="click_name"
+      exposure-event_position="click_name">发布房源</a></li>
+
+    <!-- <li><a href="" data-event_id="25754" data-event_action="click_name=入驻公寓">公寓入驻</a></li> -->
+
+            <li class="beike__nav--code">
+      下载APP
+      <div class="nav-list beike__nav--qrcode">
+
+                  <img width="94" height="94" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/img/getDownloadQr.png?_v=202608311708077aa" alt="下载贝壳APP">
+        
+      </div>
+    </li>
+        
+  </ul>
+</div>
+  <!-- 搜索房源sug -->
+  <div class="search w1150" id="search">
+  <!-- <a class="search__logo" href="/"></a> -->
+  <div class="search__wrap">
+    <input class="search__input fl" type="text" data-el="input" placeholder="请输入区域、商圈或小区名开始找房" autocomplete="off" value="" data-value="">
+    <span class="search__button fl" data-el="button" data-event_id="10800" data-event_send="no"></span>
+  </div>
+
+</div>  </div>
+
+  <!-- 列表页面包屑 -->
+  <div class="bread__nav w1150 ">
+  <p class="bread__nav__wrapper oneline">
+                  <a href="https://hz.zu.ke.com/">杭州贝壳网</a>&nbsp;&gt;&nbsp;
+                      <h1>
+        <a href="https://hz.zu.ke.com/zufang/">杭州租房</a>
+      </h1>
+            </p>
+</div>
+
+  <!-- 筛选项 -->
+  <div class="filter">
+  <div class="filter__wrapper w1150" id="filter">
+    <ul class="filter__item--noaside">
+      <li class="filter__item--level1 down strong" data-tab="1" data-el="area" data-antitarget="station"><a href="/zufang/" onclick="return false;">按区域</a></li>
+          <li class="filter__item--level1 " data-tab="1" data-el="station" data-antitarget="area"><a href="/zufang/" onclick="return false;">按地铁线</a></li>
+        </ul>
+
+          <ul data-target="area" class="">
+              <li data-id="0" data-type="district" class="filter__item--level2 filter__item--aside strong">
+          <a href="/zufang/"  rel="nofollow">不限</a>
+        </li>
+              <li data-id="330183" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/fuyangqu/"  >富阳区</a>
+        </li>
+              <li data-id="330182" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/jiandeshi/"  >建德市</a>
+        </li>
+              <li data-id="330185" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/linanqu/"  >临安区</a>
+        </li>
+              <li data-id="23009015" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/hainingshi/"  >海宁市</a>
+        </li>
+              <li data-id="23011905" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/linpingqu/"  >临平区</a>
+        </li>
+              <li data-id="23011864" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/qiantangqu/"  >钱塘区</a>
+        </li>
+              <li data-id="330127" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/chunanxian/"  >淳安县</a>
+        </li>
+              <li data-id="330122" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/tongluxian/"  >桐庐县</a>
+        </li>
+              <li data-id="330105" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/gongshuqu/"  >拱墅区</a>
+        </li>
+              <li data-id="330106" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/xihuqu4/"  >西湖区</a>
+        </li>
+              <li data-id="330108" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/binjiangqu/"  >滨江区</a>
+        </li>
+              <li data-id="330110" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/yuhangqu/"  >余杭区</a>
+        </li>
+              <li data-id="330109" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/xiaoshanqu/"  >萧山区</a>
+        </li>
+              <li data-id="330102" data-type="district" class="filter__item--level2  ">
+          <a href="/zufang/shangchengqu/"  >上城区</a>
+        </li>
+            </ul>
+    
+          <ul class="hide" data-target="station">
+              <li data-id="0" data-type="line" class="filter__item--level2 filter__item--aside strong">
+          <a href="/ditiezufang/" rel="nofollow">不限</a>
+        </li>
+              <li data-id="18000011986630" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000011986630/" >1号线(萧山国际机场-湘湖)</a>
+        </li>
+              <li data-id="189500791680395" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li189500791680395/" >地铁2号线</a>
+        </li>
+              <li data-id="1820063718694507" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li1820063718694507/" >3号线(星桥-吴山前村)</a>
+        </li>
+              <li data-id="1820069331810967" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li1820069331810967/" >3号线(星桥-石马)</a>
+        </li>
+              <li data-id="189503468170337" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li189503468170337/" >地铁4号线</a>
+        </li>
+              <li data-id="1820044952055481" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li1820044952055481/" >地铁5号线</a>
+        </li>
+              <li data-id="18000009671507" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000009671507/" >地铁6号线</a>
+        </li>
+              <li data-id="18000009671508" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000009671508/" >地铁6号线(杭富线)</a>
+        </li>
+              <li data-id="18000009671509" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000009671509/" >地铁7号线</a>
+        </li>
+              <li data-id="18000013305128" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000013305128/" >8号线</a>
+        </li>
+              <li data-id="18000013458911" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000013458911/" >9号线</a>
+        </li>
+              <li data-id="1820063723931957" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li1820063723931957/" >10号线</a>
+        </li>
+              <li data-id="18000002564924" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000002564924/" >16号线</a>
+        </li>
+              <li data-id="1820063735460976" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li1820063735460976/" >地铁19号线</a>
+        </li>
+              <li data-id="18000013305129" data-type="line" class="filter__item--level2  ">
+          <a href="/ditiezufang/li18000013305129/" >杭海城际铁路</a>
+        </li>
+            </ul>
+    
+    
+          <ul data-target="station">
+              </ul>
+    
+          <ul class="filter__ul" data-el="rentType">
+          <li class="filter__item--level4 filter__item--aside"><a href="javascript:;">方式</a></li>
+                  <li data-id="0" class="filter__item--level4 strong">
+            <a href="/zufang/" rel="nofollow" >不限</a>
+          </li>
+                  <li data-id="200600000001" class="filter__item--level4 ">
+            <a href="/zufang/rt200600000001/"  >整租</a>
+          </li>
+                  <li data-id="200600000002" class="filter__item--level4 ">
+            <a href="/zufang/rt200600000002/"  >合租</a>
+          </li>
+              </ul>
+    
+    
+          <ul class="filter__ul" data-el="filterPrice">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">租金</a></li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp1/">≤1000元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp2/">1000-1500元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp3/">1500-2000元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp4/">2000-2500元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp5/">2500-3500元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp6/">3500-5000元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp7/">5000-10000元</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/rp8/">≥10000元</a>
+          </li>
+                  <li class="filter__item--input" data-url="/zufang/brp{min}erp{max}/"><input type="text" data-el="input_start" value="">-<input data-el="input_end" type="text" value="">元<span class="filter__button" data-el="button"></span></li>
+      </ul>
+    
+          <ul class="filter__ul">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">户型</a></li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/l0/">一居</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/l1/">两居</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/l2/">三居</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/l3/">四居+</a>
+          </li>
+              </ul>
+    
+    
+          <ul class="filter__ul ">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">朝向</a></li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/f100500000001/">东</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/f100500000005/">西</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/f100500000003/">南</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/f100500000007/">北</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/f100500000009/">南北</a>
+          </li>
+              </ul>
+    
+          <ul class="filter__ul hide">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">品牌</a></li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200306004772/">省心租</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200301001000/">链家</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200302002000/">自如</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200306001917/">宅一起新青年社区</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200302003000/">魔方公寓</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200306000304/">柚米国际社区</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200302036000/">朗诗寓</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a href="/zufang/ab200306002821/">宁巢公寓</a>
+          </li>
+                    </ul>
+    
+          <ul class="filter__ul hide">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">特色</a></li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/su1/">近地铁</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/bc1/">拎包入住</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/de1/">精装修</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/rpw1/">押一付一</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/in1/">新上</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/ht1/">认证公寓</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/hk1/">随时看房</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/vr1/">VR房源</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/orec1/">业主自荐</a>
+          </li>
+              </ul>
+          <!--租期-->
+            <ul class="filter__ul hide">
+            <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">租期</a></li>
+                            <li class="filter__item--level5 check ">
+                    <a rel="nofollow" href="/zufang/rmp1/">月租</a>
+                </li>
+                            <li class="filter__item--level5 check ">
+                    <a rel="nofollow" href="/zufang/rmp2/">年租</a>
+                </li>
+                            <li class="filter__item--level5 check ">
+                    <a rel="nofollow" href="/zufang/rmp3/">一个月起租</a>
+                </li>
+                            <li class="filter__item--level5 check ">
+                    <a rel="nofollow" href="/zufang/rmp4/">1-3个月</a>
+                </li>
+                            <li class="filter__item--level5 check ">
+                    <a rel="nofollow" href="/zufang/rmp5/">4-6个月</a>
+                </li>
+                    </ul>
+    
+          <ul class="filter__ul hide">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">楼层</a></li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/lc200500000003/">低楼层</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/lc200500000002/">中楼层</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/lc200500000001/">高楼层</a>
+          </li>
+              </ul>
+    
+          <ul class="filter__ul hide">
+          <li class="filter__item--level5 filter__item--aside"><a href="javascript:;">电梯</a></li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/ie0/">无电梯</a>
+          </li>
+                  <li class="filter__item--level5 check ">
+            <a rel="nofollow" href="/zufang/ie1/">有电梯</a>
+          </li>
+              </ul>
+    
+    
+      </div>
+  <div class="filter__item--more" data-el="filterMore">收起<i class="more-icon"></i></div>
+</div>
+
+  <!-- 房源列表相关信息 -->
+  <div class="content w1150" id="content">
+    <div class="content__article">
+
+      <!-- 搜索结果信息 -->
+      <p class="content__title">
+      已为您找到 <span class="content__title--hl">58012</span> 套 <a href="https://hz.zu.ke.com/zufang/" target="_blank" style="text-decoration:none;color:black">杭州租房</a>
+    <!-- GR 需求不展示此功能 -->
+      <span class="content__title--aside"><a href="/zufang/" id="clearUrl">清空条件</a></span>
+  
+</p>
+
+      <!-- 搜索结果排序模块 -->
+      <ul class="content__filter" id="contentList">
+            <li data-event_id="10800" data-event_action="search_condition=/zufang/" class='content__filter--selected'>
+        <a href="/zufang/" 
+           data-event_id="10797" 
+           data-event_action="target=综合排序"
+           data-event_position="target">综合排序</a>
+      </li>
+                <li data-event_id="10800" data-event_action="search_condition=/zufang/rco11/" >
+        <a href="/zufang/rco11/" 
+           data-event_id="10797" 
+           data-event_action="target=最新上架"
+           data-event_position="target">最新上架</a>
+      </li>
+                                                              <li data-event_id="10800" 
+          data-event_action="search_condition=/zufang/rco21/" 
+          class=' '>
+
+                  <a href="/zufang/rco21/" 
+             data-event_id="10797" 
+             data-event_action="target=价格"
+             data-event_position="target"
+             >价格</a>
+              </li>
+                                                              <li data-event_id="10800" 
+          data-event_action="search_condition=/zufang/rco31/" 
+          class=' '>
+
+                  <a href="/zufang/rco31/" 
+             data-event_id="10797" 
+             data-event_action="target=面积"
+             data-event_position="target"
+             >面积</a>
+              </li>
+        </ul>
+
+      <!-- 小区吊顶模块 -->
+      
+      
+        <!-- 有结果时，房源列表 -->
+        <div class="content__list">
+
+          <!--直通车 品牌或门店-->
+                    <!-- 直升机 广告房源与list去重 && 广告房源插入list第1、3、4位(房源数不足3个时广告可按顺序排列) -->
+          
+          <!-- 房源列表模块 -->
+          <div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="省心租"
+  data-house_code="HZ2177359430218153984"
+  data-brand_code="200306004772"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="0"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806912"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="0"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=0&housedel_id=HZ2177359430218153984"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2177359430218153984&house_type=省心租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2177359430218153984.html"
+      title="整租·理想康城国际 3室2厅 南">
+        <img
+          alt="整租·理想康城国际 3室2厅 南_理想康城国际租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/lease-image/house/c7e9b01162c15f736d002341d0dd125d.jpeg.250x182.jpg"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                    <i class="sxz-logo"></i>
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2177359430218153984.html">
+          整租·理想康城国际 3室2厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linpingqu/">临平区</a>-<a href="/zufang/linpingxincheng/" target="_blank">临平新城</a>-<a title="理想康城国际" href="/zufang/c187303037202030/" target="_blank">理想康城国际</a>
+        <i>/</i>
+        126.07㎡
+        <i>/</i>南        <i>/</i>
+          3室2厅2卫        <span class="hide">
+          <i>/</i>
+          高楼层                        （30层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--ziying_sxz">自营</i>
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            <i class="content__item__tag--two_bathroom">双卫生间</i>
+            <i class="content__item__tag--is_key">随时看房</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            贝壳优选          </span>
+                          <span class="content__list--item--time oneline">今天维护</span>
+              </p>
+            <span class="content__list--item-price"><em>2800</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2077710228031275008"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="1"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806913"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="1"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=1&housedel_id=HZ2077710228031275008"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2077710228031275008&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2077710228031275008.html"
+      title="整租·南湖芯苑 3室0厅 南">
+        <img
+          alt="整租·南湖芯苑 3室0厅 南_南湖芯苑租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_PUnvFOXHm.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2077710228031275008.html">
+          整租·南湖芯苑 3室0厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linanqu/">临安区</a>-<a href="/zufang/qingshanhukejicheng/" target="_blank">青山湖科技城</a>-<a title="南湖芯苑" href="/zufang/c18000000134688/" target="_blank">南湖芯苑</a>
+        <i>/</i>
+        105.00㎡
+        <i>/</i>南        <i>/</i>
+          3室0厅3卫        <span class="hide">
+          <i>/</i>
+          低楼层                        （5层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">2天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1500</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="省心租"
+  data-house_code="HZ2021613751744069632"
+  data-brand_code="200306004772"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="2"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806914"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="2"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=2&housedel_id=HZ2021613751744069632"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2021613751744069632&house_type=省心租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2021613751744069632.html"
+      title="整租·嘉丰万悦城南区 3室2厅 南">
+        <img
+          alt="整租·嘉丰万悦城南区 3室2厅 南_嘉丰万悦城南区租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/lease-image/house/ec010feb20596c0d5d64e7730448f3c7.jpeg.250x182.jpg"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                    <i class="sxz-logo"></i>
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2021613751744069632.html">
+          整租·嘉丰万悦城南区 3室2厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linpingqu/">临平区</a>-<a href="/zufang/donghu6/" target="_blank">东湖</a>-<a title="嘉丰万悦城南区" href="/zufang/c187258395389038/" target="_blank">嘉丰万悦城南区</a>
+        <i>/</i>
+        89.04㎡
+        <i>/</i>南        <i>/</i>
+          3室2厅2卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （23层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--ziying_sxz">自营</i>
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            <i class="content__item__tag--two_bathroom">双卫生间</i>
+            <i class="content__item__tag--is_key">随时看房</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            贝壳优选          </span>
+                          <span class="content__list--item--time oneline">1天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>2050</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="985214"
+    data-brand_code="200306016493"
+    data-ad_code="137703051535205288"
+    data-c_type="1"
+    data-position="3"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806915"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="3"
+    data-ad_type="290"
+    data-bid_version="v137703083262493792"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="985214" href="/apartment/54105.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/54105.html"
+      title="独栋·保利和寓 保利和寓（天汇店） 聚才路地铁口/30平loft/落地窗/押一付一/大厂优惠/可养宠 1室1厅">
+        <img
+        alt="独栋·保利和寓 保利和寓（天汇店） 聚才路地铁口/30平loft/落地窗/押一付一/大厂优惠/可养宠 1室1厅_保利天汇租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/58616632d5782c983254b52bd7ef8449-1786161183435/4addf3f6e2dc2d59916598a4780941be.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/54105.html">
+          独栋·保利和寓 保利和寓（天汇店） 聚才路地铁口/30平loft/落地窗/押一付一/大厂优惠/可养宠 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩3间</span>
+          <i>/</i>
+                30.00㎡
+        <i>/</i>3间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--bedding_complete">拎包入住</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--balcony">有阳台</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            保利和寓          </span>
+                          <span class="content__list--item--time">4天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>3960-4320</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="省心租"
+  data-house_code="HZ2182095841378959360"
+  data-brand_code="200306004772"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="4"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806916"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="4"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=4&housedel_id=HZ2182095841378959360"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2182095841378959360&house_type=省心租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2182095841378959360.html"
+      title="整租·融创望海潮公寓 4室2厅 南">
+        <img
+          alt="整租·融创望海潮公寓 4室2厅 南_融创望海潮公寓租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/lease-image/house/aab59ff72de3838812af90478377c4f0.jpeg.250x182.jpg"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                    <i class="sxz-logo"></i>
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2182095841378959360.html">
+          整租·融创望海潮公寓 4室2厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/xiaoshanqu/">萧山区</a>-<a href="/zufang/xiaoshanxinchengqu/" target="_blank">萧山新城区</a>-<a title="融创望海潮公寓" href="/zufang/c1820027146023188/" target="_blank">融创望海潮公寓</a>
+        <i>/</i>
+        128.00㎡
+        <i>/</i>南        <i>/</i>
+          4室2厅2卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （18层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--ziying_sxz">自营</i>
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            <i class="content__item__tag--two_bathroom">双卫生间</i>
+            <i class="content__item__tag--is_key">随时看房</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            贝壳优选          </span>
+                          <span class="content__list--item--time oneline">今天维护</span>
+              </p>
+            <span class="content__list--item-price"><em>6000</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="746241"
+    data-brand_code="200306001866"
+    data-ad_code="122836084486194272"
+    data-c_type="1"
+    data-position="5"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806917"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="5"
+    data-ad_type="290"
+    data-bid_version="v137430789634540456"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="746241" href="/apartment/53563.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/53563.html"
+      title="独栋·泊寓 北宸店 【全新装修领2100礼包】半年起租丨近千年舟杭行荟丨民电无忧丨可做饭丨押一付一丨宠物友好【焕新B】 1室1厅">
+        <img
+        alt="独栋·泊寓 北宸店 【全新装修领2100礼包】半年起租丨近千年舟杭行荟丨民电无忧丨可做饭丨押一付一丨宠物友好【焕新B】 1室1厅_南北盛德国际租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/15520f335a4e306d596a3a79ad353cc3-1773317070099/4315a63f95e7e7eb2b378b1471049745.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/53563.html">
+          独栋·泊寓 北宸店 【全新装修领2100礼包】半年起租丨近千年舟杭行荟丨民电无忧丨可做饭丨押一付一丨宠物友好【焕新B】 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                41.66㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--rent_period_month">月租</i>
+                  <i class="content__item__tag--balcony">有阳台</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            泊寓          </span>
+                          <span class="content__list--item--time">8天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2233</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="省心租"
+  data-house_code="HZ2080304065346011136"
+  data-brand_code="200306004772"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="6"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806918"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="6"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=6&housedel_id=HZ2080304065346011136"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2080304065346011136&house_type=省心租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2080304065346011136.html"
+      title="整租·临平桂花城北区 4室2厅 南">
+        <img
+          alt="整租·临平桂花城北区 4室2厅 南_临平桂花城北区租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc0_ESEtSEUhO.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                    <i class="sxz-logo"></i>
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2080304065346011136.html">
+          整租·临平桂花城北区 4室2厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linpingqu/">临平区</a>-<a href="/zufang/linpingxincheng/" target="_blank">临平新城</a>-<a title="临平桂花城北区" href="/zufang/c2711057884221/" target="_blank">临平桂花城北区</a>
+        <i>/</i>
+        160.55㎡
+        <i>/</i>南        <i>/</i>
+          4室2厅2卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （11层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--ziying_sxz">自营</i>
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            <i class="content__item__tag--two_bathroom">双卫生间</i>
+            <i class="content__item__tag--is_key">随时看房</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            贝壳优选          </span>
+                          <span class="content__list--item--time oneline">今天维护</span>
+              </p>
+            <span class="content__list--item-price"><em>3700</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ1734872178014289920"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="7"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806919"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="7"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=7&housedel_id=HZ1734872178014289920"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ1734872178014289920&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ1734872178014289920.html"
+      title="整租·新桃源西区 3室1厅 南">
+        <img
+          alt="整租·新桃源西区 3室1厅 南_新桃源西区租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_63PnxiQTz.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ1734872178014289920.html">
+          整租·新桃源西区 3室1厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/fuyangqu/">富阳区</a>-<a href="/zufang/fuchun/" target="_blank">富春</a>-<a title="新桃源西区" href="/zufang/c1820034842549019/" target="_blank">新桃源西区</a>
+        <i>/</i>
+        94.00㎡
+        <i>/</i>南        <i>/</i>
+          3室1厅1卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （7层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--decoration">精装</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">5天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1630</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="省心租"
+  data-house_code="HZ1943632018776522752"
+  data-brand_code="200306004772"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="8"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806920"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="8"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=8&housedel_id=HZ1943632018776522752"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ1943632018776522752&house_type=省心租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ1943632018776522752.html"
+      title="整租·湖悦江南院 1室0厅 西">
+        <img
+          alt="整租·湖悦江南院 1室0厅 西_湖悦江南院租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/lease-image/house/61aad334b4045093109531d0deae35cd.jpeg.250x182.jpg"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 是否展示省心租图片 -->
+                    <i class="sxz-logo"></i>
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ1943632018776522752.html">
+          整租·湖悦江南院 1室0厅 西        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/xiaoshanqu/">萧山区</a>-<a href="/zufang/xiaoshankejicheng/" target="_blank">萧山科技城</a>-<a title="湖悦江南院" href="/zufang/c1820068370242241/" target="_blank">湖悦江南院</a>
+        <i>/</i>
+        39.23㎡
+        <i>/</i>西        <i>/</i>
+          1室0厅1卫        <span class="hide">
+          <i>/</i>
+          低楼层                        （16层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--ziying_sxz">自营</i>
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            <i class="content__item__tag--is_key">随时看房</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            贝壳优选          </span>
+                          <span class="content__list--item--time oneline">今天维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1600</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="1001537"
+    data-brand_code="200306019710"
+    data-ad_code="138068024713167968"
+    data-c_type="1"
+    data-position="9"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806921"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="9"
+    data-ad_type="290"
+    data-bid_version="v138068993747338936"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="1001537" href="/apartment/112277.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/112277.html"
+      title="独栋·栖遇 新天地店 不接短租-一室一厅（带厅）32平整租户型，非隔断合租。 1室1厅">
+        <img
+        alt="独栋·栖遇 新天地店 不接短租-一室一厅（带厅）32平整租户型，非隔断合租。 1室1厅_广城同创园租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/ddcf70508309408061191df170dc0f8e-1788943055638/33037035dd226135b6e748072327b39b.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/112277.html">
+          独栋·栖遇 新天地店 不接短租-一室一厅（带厅）32平整租户型，非隔断合租。 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩3间</span>
+          <i>/</i>
+                32.00㎡
+        <i>/</i>3间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--is_new">新上</i>
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--bedding_complete">拎包入住</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            栖遇          </span>
+                          <span class="content__list--item--time">今天维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2322</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="省心租"
+  data-house_code="HZ2070485537881325568"
+  data-brand_code="200306004772"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="10"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806922"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="10"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=10&housedel_id=HZ2070485537881325568"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2070485537881325568&house_type=省心租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2070485537881325568.html"
+      title="整租·钱塘ONE 3室2厅 南">
+        <img
+          alt="整租·钱塘ONE 3室2厅 南_钱塘ONE租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/lease-image/house/83aea8601e69659442021652e1e7bafa.jpeg.250x182.jpg"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                    <i class="sxz-logo"></i>
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2070485537881325568.html">
+          整租·钱塘ONE 3室2厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/xihuqu4/">西湖区</a>-<a href="/zufang/zhuantang/" target="_blank">转塘</a>-<a title="钱塘ONE" href="/zufang/c1820021658557742/" target="_blank">钱塘ONE</a>
+        <i>/</i>
+        99.10㎡
+        <i>/</i>南        <i>/</i>
+          3室2厅2卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （18层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--ziying_sxz">自营</i>
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            <i class="content__item__tag--two_bathroom">双卫生间</i>
+            <i class="content__item__tag--is_key">随时看房</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            贝壳优选          </span>
+                          <span class="content__list--item--time oneline">今天维护</span>
+              </p>
+            <span class="content__list--item-price"><em>4100</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="1002884"
+    data-brand_code="200306019710"
+    data-ad_code="138068024713167968"
+    data-c_type="1"
+    data-position="11"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806923"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="11"
+    data-ad_type="290"
+    data-bid_version="v138068993747338936"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="1002884" href="/apartment/112277.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/112277.html"
+      title="独栋·栖遇 新天地店 不接短租-整租一室一厅（带厅）近新天地街地铁站大窗整租 1室1厅">
+        <img
+        alt="独栋·栖遇 新天地店 不接短租-整租一室一厅（带厅）近新天地街地铁站大窗整租 1室1厅_广城同创园租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/ddcf70508309408061191df170dc0f8e-1789109794128/89ff46fd25490fa4f6482e7fa8d52bc3.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/112277.html">
+          独栋·栖遇 新天地店 不接短租-整租一室一厅（带厅）近新天地街地铁站大窗整租 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                32.00㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--is_new">新上</i>
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            栖遇          </span>
+                          <span class="content__list--item--time">今天维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2322</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2152692102864044032"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="12"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806924"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="12"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=12&housedel_id=HZ2152692102864044032"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2152692102864044032&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2152692102864044032.html"
+      title="整租·盘龙山社区花坞路 2室1厅 南">
+        <img
+          alt="整租·盘龙山社区花坞路 2室1厅 南_盘龙山社区花坞路租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_voODYdIUI.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2152692102864044032.html">
+          整租·盘龙山社区花坞路 2室1厅 南        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/fuyangqu/">富阳区</a>-<a href="/zufang/fuchun/" target="_blank">富春</a>-<a title="盘龙山社区花坞路" href="/zufang/c18000000091878/" target="_blank">盘龙山社区花坞路</a>
+        <i>/</i>
+        70.00㎡
+        <i>/</i>南        <i>/</i>
+          2室1厅1卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （7层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            </p>
+      <p class="content__list--item--brand oneline">
+                      </p>
+            <span class="content__list--item-price"><em>810</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="999334"
+    data-brand_code="200306001528"
+    data-ad_code="130636242666538680"
+    data-c_type="1"
+    data-position="13"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806925"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="13"
+    data-ad_type="280"
+    data-bid_version="v138101733163157176"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="999334" href="/apartment/106132.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/106132.html"
+      title="独栋·壹间 云创云寓 【步行阿里云谷】北向一室整租 民水民电 拎包入住 可备案 可开票 可月付 开间">
+        <img
+        alt="独栋·壹间 云创云寓 【步行阿里云谷】北向一室整租 民水民电 拎包入住 可备案 可开票 可月付 开间_紫金港云谷中心租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/d087e1f5009d3cc00d727f14b6c95cdb-1788665205663/fe4e7831a7d93cb6b845bf069e633427.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/106132.html">
+          独栋·壹间 云创云寓 【步行阿里云谷】北向一室整租 民水民电 拎包入住 可备案 可开票 可月付 开间        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩2间</span>
+          <i>/</i>
+                35.00㎡
+        <i>/</i>2间在租        <i>/</i>
+        1室0厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--is_new">新上</i>
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            壹间          </span>
+                          <span class="content__list--item--time">1天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>1790-1895</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2209218289840685056"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="14"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806926"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="14"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=14&housedel_id=HZ2209218289840685056"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2209218289840685056&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2209218289840685056.html"
+      title="合租·仓溢绿苑 6居室 南/北卧">
+        <img
+          alt="合租·仓溢绿苑 6居室 南/北卧_仓溢绿苑租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_3T4n1zv8R.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2209218289840685056.html">
+          合租·仓溢绿苑 6居室 南/北卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/yuhangqu/">余杭区</a>-<a href="/zufang/weilaikejicheng/" target="_blank">未来科技城</a>-<a title="仓溢绿苑" href="/zufang/c2711051437855/" target="_blank">仓溢绿苑</a>
+        <i>/</i>
+        20.00㎡
+        <i>/</i>南 北        <i>/</i>
+          6室0厅2卫        <span class="hide">
+          <i>/</i>
+          高楼层                        （6层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--is_subway_house">近地铁</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">1天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>950</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="924354"
+    data-brand_code="200306001528"
+    data-ad_code="130636242666538680"
+    data-c_type="1"
+    data-position="15"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806927"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="15"
+    data-ad_type="280"
+    data-bid_version="v138101733163157176"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="924354" href="/apartment/106132.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/106132.html"
+      title="独栋·壹间 云创云寓 【高端民水民电公寓】全新品牌家电新风系统中央空调12个月起租 费用透明 可月付 赠送网络 禁止养宠 开间">
+        <img
+        alt="独栋·壹间 云创云寓 【高端民水民电公寓】全新品牌家电新风系统中央空调12个月起租 费用透明 可月付 赠送网络 禁止养宠 开间_紫金港云谷中心租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/d087e1f5009d3cc00d727f14b6c95cdb-1775269631757/db48349251f686c29ad9409866bd13af.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/106132.html">
+          独栋·壹间 云创云寓 【高端民水民电公寓】全新品牌家电新风系统中央空调12个月起租 费用透明 可月付 赠送网络 禁止养宠 开间        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                35.00㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室0厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            壹间          </span>
+                          <span class="content__list--item--time">1天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>1875</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="988280"
+    data-brand_code="200302062000"
+    data-ad_code="136350630979978152"
+    data-c_type="1"
+    data-position="16"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806928"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="16"
+    data-ad_type="290"
+    data-bid_version="v137925040740910176"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="988280" href="/apartment/56437.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/56437.html"
+      title="独栋·冠寓 杭州东站驿城路地铁站 杭州东站短租/万象汇地铁口/实习过渡/高颜值朝南落地窗/0中介费 1室1厅">
+        <img
+        alt="独栋·冠寓 杭州东站驿城路地铁站 杭州东站短租/万象汇地铁口/实习过渡/高颜值朝南落地窗/0中介费 1室1厅_全福弄口商务中心租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/9dde183a6228d201b22c8264aa5198fd-1786691181135/b2b26632d445ed260180f86a757cc9d7.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/56437.html">
+          独栋·冠寓 杭州东站驿城路地铁站 杭州东站短租/万象汇地铁口/实习过渡/高颜值朝南落地窗/0中介费 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                33.00㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--rent_period_month">月租</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            冠寓          </span>
+                          <span class="content__list--item--time">6天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2380</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2112020051790921728"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="17"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806929"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="17"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=17&housedel_id=HZ2112020051790921728"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2112020051790921728&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2112020051790921728.html"
+      title="合租·湖山云台苑 4居室 南/北卧">
+        <img
+          alt="合租·湖山云台苑 4居室 南/北卧_湖山云台苑租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_RINVty53W.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2112020051790921728.html">
+          合租·湖山云台苑 4居室 南/北卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linanqu/">临安区</a>-<a href="/zufang/linan1/" target="_blank">临安</a>-<a title="湖山云台苑" href="/zufang/c1820053794201200/" target="_blank">湖山云台苑</a>
+        <i>/</i>
+        30.00㎡
+        <i>/</i>南 北        <i>/</i>
+          4室1厅1卫        <span class="hide">
+          <i>/</i>
+          低楼层                        （32层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--is_subway_house">近地铁</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">2天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1600</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="425379"
+    data-brand_code="200306010089"
+    data-ad_code="121571238372329144"
+    data-c_type="1"
+    data-position="18"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806930"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="18"
+    data-ad_type="290"
+    data-bid_version="v138021584081142880"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="425379" href="/apartment/47821.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/47821.html"
+      title="独栋·华润置地·有巢公馆 萧山店 萧山2号线地铁口优质好房/央企品牌直租/ 6个月起租押一付一 开间">
+        <img
+        alt="独栋·华润置地·有巢公馆 萧山店 萧山2号线地铁口优质好房/央企品牌直租/ 6个月起租押一付一 开间_天润商业中心租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/rent-user-avatar/1ea5b8cc-79db-4c64-a75e-2ac054cb993c.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                  <i class="vr-logo"></i>
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/47821.html">
+          独栋·华润置地·有巢公馆 萧山店 萧山2号线地铁口优质好房/央企品牌直租/ 6个月起租押一付一 开间        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩2间</span>
+          <i>/</i>
+                40.00㎡
+        <i>/</i>2间在租        <i>/</i>
+        1室0厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            华润置地·有巢公馆          </span>
+                          <span class="content__list--item--time">2天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2388-2445</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2207338135547805696"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="19"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806931"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="19"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=19&housedel_id=HZ2207338135547805696"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2207338135547805696&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2207338135547805696.html"
+      title="合租·望水华庭 1居室 北卧">
+        <img
+          alt="合租·望水华庭 1居室 北卧_望水华庭租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_qetBOOgIN.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2207338135547805696.html">
+          合租·望水华庭 1居室 北卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/binjiangqu/">滨江区</a>-<a href="/zufang/puyan/" target="_blank">浦沿</a>-<a title="望水华庭" href="/zufang/c18000000063306/" target="_blank">望水华庭</a>
+        <i>/</i>
+        25.00㎡
+        <i>/</i>北        <i>/</i>
+          1室0厅0卫        <span class="hide">
+          <i>/</i>
+          高楼层                        （24层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">1天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1750</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ1990711175431585792"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="20"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806932"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="20"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=20&housedel_id=HZ1990711175431585792"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ1990711175431585792&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ1990711175431585792.html"
+      title="合租·如意云庭 4居室 南卧">
+        <img
+          alt="合租·如意云庭 4居室 南卧_如意云庭租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_qxAGBoAw5.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ1990711175431585792.html">
+          合租·如意云庭 4居室 南卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linanqu/">临安区</a>-<a href="/zufang/linan1/" target="_blank">临安</a>-<a title="如意云庭" href="/zufang/c1820039151375403/" target="_blank">如意云庭</a>
+        <i>/</i>
+        30.00㎡
+        <i>/</i>南        <i>/</i>
+          4室2厅2卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （18层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">1天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>850</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="321835"
+    data-brand_code="200302062000"
+    data-ad_code="137120808512668584"
+    data-c_type="1"
+    data-position="21"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806933"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="21"
+    data-ad_type="290"
+    data-bid_version="v138069672212710496"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="321835" href="/apartment/28577.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/28577.html"
+      title="独栋·冠寓 龙湖冠寓滨江浦沿店 金秋特惠/安居福利/毕业生&amp;企业专属折扣/拎包入住 1室1厅">
+        <img
+        alt="独栋·冠寓 龙湖冠寓滨江浦沿店 金秋特惠/安居福利/毕业生&amp;企业专属折扣/拎包入住 1室1厅_龙湖冠寓租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/9dde183a6228d201b22c8264aa5198fd-1680420930259/156005c5baf40ff51a327f1c34f2975b.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                  <i class="vr-logo"></i>
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/28577.html">
+          独栋·冠寓 龙湖冠寓滨江浦沿店 金秋特惠/安居福利/毕业生&amp;企业专属折扣/拎包入住 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                30.00㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--rent_period_month">月租</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            冠寓          </span>
+                          <span class="content__list--item--time">6天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2160</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ1855121093522620416"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="22"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806934"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="22"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=22&housedel_id=HZ1855121093522620416"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ1855121093522620416&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ1855121093522620416.html"
+      title="合租·湖山云台苑 4居室 南卧">
+        <img
+          alt="合租·湖山云台苑 4居室 南卧_湖山云台苑租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_MDhTviGcZ.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ1855121093522620416.html">
+          合租·湖山云台苑 4居室 南卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linanqu/">临安区</a>-<a href="/zufang/linan1/" target="_blank">临安</a>-<a title="湖山云台苑" href="/zufang/c1820053794201200/" target="_blank">湖山云台苑</a>
+        <i>/</i>
+        50.00㎡
+        <i>/</i>南        <i>/</i>
+          4室1厅4卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （31层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--is_subway_house">近地铁</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">1天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1650</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2207761775279996928"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="23"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806935"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="23"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=23&housedel_id=HZ2207761775279996928"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2207761775279996928&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2207761775279996928.html"
+      title="合租·众安白马御府 2居室 南卧">
+        <img
+          alt="合租·众安白马御府 2居室 南卧_众安白马御府租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_UXRQtLJ2h.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2207761775279996928.html">
+          合租·众安白马御府 2居室 南卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/xiaoshanqu/">萧山区</a>-<a href="/zufang/xiaoshanxinchengqu/" target="_blank">萧山新城区</a>-<a title="众安白马御府" href="/zufang/c1811402137578903/" target="_blank">众安白马御府</a>
+        <i>/</i>
+        45.00㎡
+        <i>/</i>南        <i>/</i>
+          2室1厅2卫        <span class="hide">
+          <i>/</i>
+          中楼层                        （19层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--is_new">新上</i>
+            <i class="content__item__tag--is_subway_house">近地铁</i>
+            <i class="content__item__tag--decoration">精装</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">今天维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1800</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ1885270308185702400"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="24"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806936"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="24"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=24&housedel_id=HZ1885270308185702400"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ1885270308185702400&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ1885270308185702400.html"
+      title="合租·云珀府 2居室 南卧">
+        <img
+          alt="合租·云珀府 2居室 南卧_云珀府租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_iXcF3Vspx.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ1885270308185702400.html">
+          合租·云珀府 2居室 南卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/linanqu/">临安区</a>-<a href="/zufang/linan1/" target="_blank">临安</a>-<a title="云珀府" href="/zufang/c18000000055510/" target="_blank">云珀府</a>
+        <i>/</i>
+        63.00㎡
+        <i>/</i>南        <i>/</i>
+          2室1厅1卫        <span class="hide">
+          <i>/</i>
+          低楼层                        （32层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">2天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>1700</em> 元/月</span>
+    </div>
+
+</div>
+<div
+  class="content__list--item"
+  data-el="listItem"
+  data-bu_desc="普租"
+  data-house_code="HZ2205609128284389376"
+  data-brand_code="200306001852"
+  data-ad_code="0"
+  data-bid_version=""
+  data-c_type="1"
+  data-position="25"
+  data-total="58012"
+  data-fb_expo_id="rs1151098264960806937"
+  data-t="default"
+  data-strategy_id=""
+  data-click_position="25"
+  data-ad_type="0"
+  data-distribution_type="203500000001"
+  data-event_id="80250"
+  data-event_action="click_position=25&housedel_id=HZ2205609128284389376"
+  data-event_position="click_position"
+  data-event_send="no"
+  data-rank_score="-1"
+  data-operation_score="0"
+  exposure-event_name="Module_View"
+  exposure-event_uicode="rentalList"
+  exposure-event_id="80249"
+  exposure-event_action="housedel_id=HZ2205609128284389376&house_type=普租"
+  >
+    <a
+      class="content__list--item--aside" target="_blank"      href="/zufang/HZ2205609128284389376.html"
+      title="合租·三新家园 2居室 南卧">
+        <img
+          alt="合租·三新家园 2居室 南卧_三新家园租房"
+          src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+          data-src="https://ke-image.ljcdn.com/110000-inspection/pc1_NQ0xwyFiJ.jpg!m_fill,w_250,h_182,l_fbk,o_auto"
+          class="lazyload">
+        <!-- 是否展示vr图片 -->
+                    <i class="vr-logo"></i>
+                <!-- 是否展示省心租图片 -->
+                
+        <!-- 广告标签 -->
+            </a>
+    <div class="content__list--item--main">
+      <p class="content__list--item--title">
+        <a class="twoline" target="_blank" href="/zufang/HZ2205609128284389376.html">
+          合租·三新家园 2居室 南卧        </a>
+                      </p>
+      <p class="content__list--item--des">
+                <a target="_blank" href="/zufang/shangchengqu/">上城区</a>-<a href="/zufang/nanxiaobu/" target="_blank">南肖埠</a>-<a title="三新家园" href="/zufang/c2711051216009/" target="_blank">三新家园</a>
+        <i>/</i>
+        60.00㎡
+        <i>/</i>南        <i>/</i>
+          2室1厅1卫        <span class="hide">
+          <i>/</i>
+          高楼层                        （5层）
+                  </span>
+      </p>
+      <p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--is_subway_house">近地铁</i>
+            </p>
+      <p class="content__list--item--brand oneline">
+                          <span class="content__list--item--time oneline">2天前维护</span>
+              </p>
+            <span class="content__list--item-price"><em>3500</em> 元/月</span>
+    </div>
+
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="275911"
+    data-brand_code="200302062000"
+    data-ad_code="137120808512668584"
+    data-c_type="1"
+    data-position="26"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806938"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="26"
+    data-ad_type="290"
+    data-bid_version="v138069672212710496"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="275911" href="/apartment/28577.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/28577.html"
+      title="独栋·冠寓 龙湖冠寓滨江浦沿店 6号线诚业路地铁口精装整租，可短租，可月付 1室1厅">
+        <img
+        alt="独栋·冠寓 龙湖冠寓滨江浦沿店 6号线诚业路地铁口精装整租，可短租，可月付 1室1厅_龙湖冠寓租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/9dde183a6228d201b22c8264aa5198fd-1680418723667/2efa611257e9dda0d0a1e0e225681194.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                  <i class="vr-logo"></i>
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/28577.html">
+          独栋·冠寓 龙湖冠寓滨江浦沿店 6号线诚业路地铁口精装整租，可短租，可月付 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩4间</span>
+          <i>/</i>
+                25.00-30.00㎡
+        <i>/</i>4间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--rent_period_month">月租</i>
+                  <i class="content__item__tag--bedding_complete">拎包入住</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+                  <i class="content__item__tag--deposit_1_pay_1">押一付一</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            冠寓          </span>
+                          <span class="content__list--item--time">6天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>1935-2357</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="943063"
+    data-brand_code="200306010089"
+    data-ad_code="121571238372329144"
+    data-c_type="1"
+    data-position="27"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806939"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="27"
+    data-ad_type="290"
+    data-bid_version="v138021584081142880"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="943063" href="/apartment/47821.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/47821.html"
+      title="独栋·华润置地·有巢公馆 萧山店 2号线杭发厂地铁口 一年起租 央企精装套房 押一付一 可申请租房补贴 开间">
+        <img
+        alt="独栋·华润置地·有巢公馆 萧山店 2号线杭发厂地铁口 一年起租 央企精装套房 押一付一 可申请租房补贴 开间_天润商业中心租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/9edbec6d2ae304dd551a6e4f6e11d8de-1778124191076/0a14e64b9d3d32d5cdc71b7e7725eeec.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/47821.html">
+          独栋·华润置地·有巢公馆 萧山店 2号线杭发厂地铁口 一年起租 央企精装套房 押一付一 可申请租房补贴 开间        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                20.00㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室0厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            华润置地·有巢公馆          </span>
+                          <span class="content__list--item--time">1天前维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>1870</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="1001555"
+    data-brand_code="200306019710"
+    data-ad_code="138068024713167968"
+    data-c_type="1"
+    data-position="28"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806940"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="28"
+    data-ad_type="290"
+    data-bid_version="v138068993747338936"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="1001555" href="/apartment/112277.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/112277.html"
+      title="独栋·栖遇 新天地店 不接短租-大通间八开门衣柜 1室1厅">
+        <img
+        alt="独栋·栖遇 新天地店 不接短租-大通间八开门衣柜 1室1厅_广城同创园租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/ddcf70508309408061191df170dc0f8e-1788944149132/a0b1c04c01361ecd17a3f797335c970d.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/112277.html">
+          独栋·栖遇 新天地店 不接短租-大通间八开门衣柜 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩1间</span>
+          <i>/</i>
+                36.00㎡
+        <i>/</i>1间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--is_new">新上</i>
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--bedding_complete">拎包入住</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            栖遇          </span>
+                          <span class="content__list--item--time">今天维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2655</em> 元/月</span>
+    </div>
+  </a>
+</div>
+<div class="content__list--item"
+    data-el="listItem"
+    data-house_code="1002892"
+    data-brand_code="200306019710"
+    data-ad_code="138068452760766136"
+    data-c_type="1"
+    data-position="29"
+    data-total="58012"
+    data-fb_expo_id="rs1151098264960806941"
+    data-t="default"
+    data-strategy_id=""
+    data-click_position="29"
+    data-ad_type="290"
+    data-bid_version="v138068452761290424"
+    data-distribution_type="203500000002"
+    >
+  <a class="link" target="_blank" data-id="1002892" href="/apartment/112277.html">
+    <!-- 左边图片 -->
+    <a
+      class="content__list--item--aside" target="_blank"      href="/apartment/112277.html"
+      title="独栋·栖遇 新天地店 不接短租-整租一室一厅（带厅）近新天地街地铁站 1室1厅">
+        <img
+        alt="独栋·栖遇 新天地店 不接短租-整租一室一厅（带厅）近新天地街地铁站 1室1厅_广城同创园租房"
+        src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202608311708077aa"
+        data-src="https://ke-image.ljcdn.com/wanjia/ddcf70508309408061191df170dc0f8e-1789110173212/c87d1a90898af4878d05c0040acca353.jpg.250x182.jpg"
+        class="lazyload">
+        <!-- 是否展示vr图片 -->
+                <!-- 广告标签 -->
+            </a>
+    <!-- 右边内容 -->
+    <div class="content__list--item--main">
+      <!-- title -->
+      <p class="content__list--item--title twoline">
+        <a target="_blank" href="/apartment/112277.html">
+          独栋·栖遇 新天地店 不接短租-整租一室一厅（带厅）近新天地街地铁站 1室1厅        </a>
+      </p>
+      <!-- house info -->
+      <p class="content__list--item--des">
+                  <span class="room__left">仅剩2间</span>
+          <i>/</i>
+                42.00㎡
+        <i>/</i>2间在租        <i>/</i>
+        1室1厅1卫      </p>
+      <!-- tags -->
+      <p class="content__list--item--bottom oneline">
+                  <i class="content__item__tag--is_new">新上</i>
+                  <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+                  <i class="content__item__tag--is_subway_house">近地铁</i>
+                  <i class="content__item__tag--decoration">精装</i>
+                  <i class="content__item__tag--open_kitchen">开放厨房</i>
+              </p>
+      <!-- brand -->
+      <p class="content__list--item--brand oneline">
+                  <span class="brand">
+            栖遇          </span>
+                          <span class="content__list--item--time">今天维护</span>
+              </p>
+      <!-- gr -->
+            <!-- price -->
+      <span class="content__list--item-price"><em>2655</em> 元/月</span>
+    </div>
+  </a>
+</div>
+        </div>
+
+        <!-- 列表分页模块 -->
+        <div class="content__pg" data-el="page_navigation" data-url="/zufang/pg{page}/" data-totalPage=100 data-curPage=1>
+        </div>
+
+        <ul style="display:hidden">
+                      <li><a href="/zufang/pg2/"></a></li>
+                      <li><a href="/zufang/pg3/"></a></li>
+                      <li><a href="/zufang/pg4/"></a></li>
+                      <li><a href="/zufang/pg5/"></a></li>
+                      <li><a href="/zufang/pg6/"></a></li>
+                      <li><a href="/zufang/pg7/"></a></li>
+                      <li><a href="/zufang/pg8/"></a></li>
+                      <li><a href="/zufang/pg9/"></a></li>
+                      <li><a href="/zufang/pg10/"></a></li>
+                      <li><a href="/zufang/pg11/"></a></li>
+                      <li><a href="/zufang/pg12/"></a></li>
+                      <li><a href="/zufang/pg13/"></a></li>
+                      <li><a href="/zufang/pg14/"></a></li>
+                      <li><a href="/zufang/pg15/"></a></li>
+                      <li><a href="/zufang/pg16/"></a></li>
+                      <li><a href="/zufang/pg17/"></a></li>
+                      <li><a href="/zufang/pg18/"></a></li>
+                      <li><a href="/zufang/pg19/"></a></li>
+                      <li><a href="/zufang/pg20/"></a></li>
+                      <li><a href="/zufang/pg21/"></a></li>
+                      <li><a href="/zufang/pg22/"></a></li>
+                      <li><a href="/zufang/pg23/"></a></li>
+                      <li><a href="/zufang/pg24/"></a></li>
+                      <li><a href="/zufang/pg25/"></a></li>
+                      <li><a href="/zufang/pg26/"></a></li>
+                      <li><a href="/zufang/pg27/"></a></li>
+                      <li><a href="/zufang/pg28/"></a></li>
+                      <li><a href="/zufang/pg29/"></a></li>
+                      <li><a href="/zufang/pg30/"></a></li>
+                      <li><a href="/zufang/pg31/"></a></li>
+                      <li><a href="/zufang/pg32/"></a></li>
+                      <li><a href="/zufang/pg33/"></a></li>
+                      <li><a href="/zufang/pg34/"></a></li>
+                      <li><a href="/zufang/pg35/"></a></li>
+                      <li><a href="/zufang/pg36/"></a></li>
+                      <li><a href="/zufang/pg37/"></a></li>
+                      <li><a href="/zufang/pg38/"></a></li>
+                      <li><a href="/zufang/pg39/"></a></li>
+                      <li><a href="/zufang/pg40/"></a></li>
+                      <li><a href="/zufang/pg41/"></a></li>
+                      <li><a href="/zufang/pg42/"></a></li>
+                      <li><a href="/zufang/pg43/"></a></li>
+                      <li><a href="/zufang/pg44/"></a></li>
+                      <li><a href="/zufang/pg45/"></a></li>
+                      <li><a href="/zufang/pg46/"></a></li>
+                      <li><a href="/zufang/pg47/"></a></li>
+                      <li><a href="/zufang/pg48/"></a></li>
+                      <li><a href="/zufang/pg49/"></a></li>
+                      <li><a href="/zufang/pg50/"></a></li>
+                      <li><a href="/zufang/pg51/"></a></li>
+                      <li><a href="/zufang/pg52/"></a></li>
+                      <li><a href="/zufang/pg53/"></a></li>
+                      <li><a href="/zufang/pg54/"></a></li>
+                      <li><a href="/zufang/pg55/"></a></li>
+                      <li><a href="/zufang/pg56/"></a></li>
+                      <li><a href="/zufang/pg57/"></a></li>
+                      <li><a href="/zufang/pg58/"></a></li>
+                      <li><a href="/zufang/pg59/"></a></li>
+                      <li><a href="/zufang/pg60/"></a></li>
+                      <li><a href="/zufang/pg61/"></a></li>
+                      <li><a href="/zufang/pg62/"></a></li>
+                      <li><a href="/zufang/pg63/"></a></li>
+                      <li><a href="/zufang/pg64/"></a></li>
+                      <li><a href="/zufang/pg65/"></a></li>
+                      <li><a href="/zufang/pg66/"></a></li>
+                      <li><a href="/zufang/pg67/"></a></li>
+                      <li><a href="/zufang/pg68/"></a></li>
+                      <li><a href="/zufang/pg69/"></a></li>
+                      <li><a href="/zufang/pg70/"></a></li>
+                      <li><a href="/zufang/pg71/"></a></li>
+                      <li><a href="/zufang/pg72/"></a></li>
+                      <li><a href="/zufang/pg73/"></a></li>
+                      <li><a href="/zufang/pg74/"></a></li>
+                      <li><a href="/zufang/pg75/"></a></li>
+                      <li><a href="/zufang/pg76/"></a></li>
+                      <li><a href="/zufang/pg77/"></a></li>
+                      <li><a href="/zufang/pg78/"></a></li>
+                      <li><a href="/zufang/pg79/"></a></li>
+                      <li><a href="/zufang/pg80/"></a></li>
+                      <li><a href="/zufang/pg81/"></a></li>
+                      <li><a href="/zufang/pg82/"></a></li>
+                      <li><a href="/zufang/pg83/"></a></li>
+                      <li><a href="/zufang/pg84/"></a></li>
+                      <li><a href="/zufang/pg85/"></a></li>
+                      <li><a href="/zufang/pg86/"></a></li>
+                      <li><a href="/zufang/pg87/"></a></li>
+                      <li><a href="/zufang/pg88/"></a></li>
+                      <li><a href="/zufang/pg89/"></a></li>
+                      <li><a href="/zufang/pg90/"></a></li>
+                      <li><a href="/zufang/pg91/"></a></li>
+                      <li><a href="/zufang/pg92/"></a></li>
+                      <li><a href="/zufang/pg93/"></a></li>
+                      <li><a href="/zufang/pg94/"></a></li>
+                      <li><a href="/zufang/pg95/"></a></li>
+                      <li><a href="/zufang/pg96/"></a></li>
+                      <li><a href="/zufang/pg97/"></a></li>
+                      <li><a href="/zufang/pg98/"></a></li>
+                      <li><a href="/zufang/pg99/"></a></li>
+                      <li><a href="/zufang/pg100/"></a></li>
+                  </ul>
+
+      
+      
+      
+    </div>
+
+          <div class="content__aside">
+                
+
+<div class="download">
+  
+  <div class="qr-code">
+          <img width="94" height="94" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/img/getDownloadQr.png?_v=202608311708077aa" alt="下载贝壳APP">
+        <div class="title">下载贝壳APP</div>
+    <div class="text">
+      <p>扫描上方二维码</p>
+      <p>随时查看新房源</p>
+      <p class="get-more">
+        <a href="//www.ke.com/client/">了解更多
+          <img width="9" height="9" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAGFBMVEUAAACcn6Gfn5+an5+bnqCbnqGfn5+cn6EV6DbuAAAAB3RSTlMA0BAw8LAgvf5k9AAAAEdJREFUKM9jIBOkBqMJhBcqoAmUC6EKmJSjKWEWR1eiiK6ECZsSA3QlzuhKSihRghDA0EJ/BWIoCgzh4YMIZALRYBrMQAkAAF5bGMBkrwzqAAAAAElFTkSuQmCC">
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+                  <div class="download">
+  <div class="qr-code">
+    <img width="120" height="120" src="https://image1.ljcdn.com/params-compact/f871e2c517a63630ce5894caa5804464.jpeg" alt="贝壳小程序">
+    <div class="title">扫描微信咨询</div>
+  </div>
+</div>
+                <div class="list-recommend" id="listRecommend">
+        </div>
+      </div>
+    
+  </div>
+
+
+  
+  
+</div>
+
+<!-- seo相关路径信息 -->
+<div class="hide">
+  <a href="/zufang/"></a>
+  <a href="/zufang/pg2/"></a>
+  <a href="/zufang/pg3/"></a>
+  <a href="/zufang/pg4/"></a>
+  <a href="/zufang/pg5/"></a>
+  <a href="/zufang/pg6/"></a>
+  <a href="/zufang/pg7/"></a>
+  <a href="/zufang/pg8/"></a>
+  <a href="/zufang/pg9/"></a>
+  <a href="/zufang/pg10/"></a>
+</div>
+
+<!-- 检索出房源结果时，添加检索id埋点 -->
+<input type="hidden" id="queryId" value="1151098263849316352">
+<!-- 底部租房保障bannner -->
+<div class="content-guarantee">
+  <div class="guarantee-content w1150">
+    <img class="guarantee-banner" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/guarantee-2.png?_v=202608311708077aa">
+    <div class="mask-banner-box">
+              <img class="banner-qrcode" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/banner_beike.png?_v=202608311708077aa">
+          </div>
+    <img data-el="guaranteeBannerClose" class="guarantee-close" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/guarantee-close.png?_v=202608311708077aa">
+  </div>
+</div>
+<!-- 左侧租房保障 -->
+<div class="slide-guarantee">
+  <img class="guarantee-slide" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/guarantee-4.png?_v=202608311708077aa">
+  <div class="mask-slide-box">
+          <img class="slide-qrcode" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/banner_beike.png?_v=202608311708077aa">
+      </div>
+</div>
+<!-- 蒙层 -->
+<div data-el="guaranteePopupClose" class="mask-guarantee">
+  <div class="mask-content">
+    <img class="mask-popup" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/guarantee-5.png?_v=202608311708077aa">
+      <div class="mask-qrcode-box">
+                  <img class="mask-qrcode" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/popup_beike.png?_v=202608311708077aa">
+              </div>
+    <img data-el="guaranteePopupClose" class="mask-close" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/detail/guarantee-close.png?_v=202608311708077aa">
+  </div>
+</div>
+
+
+<!-- 底部留资弹窗 -->
+<!-- <div data-el="fix-bottom-pop" class="fix-bottom-wrap">
+  <div class="bottom-content">
+    <img class="left-img" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/img/bg_agent@2x.png?_v=202608311708077aa" alt="底部找房图片">
+    <div class="middle-text">专业经纪人找房更高效</div>
+    <div class="right-percent">
+      <p class="top-text">想找到心仪房源？<span data-el="red-text" class="red-text">请不要频繁操作</span></p>
+      <div class="form-user-info">
+        <div class="login" style="display: none">
+          <input
+            class="bottom-form-item"
+            data-el="phone-user"
+            type="text"
+            value=""
+            name="phone"
+            maxlength="11"
+            placeholder="请输入您的手机号">
+          <button
+            class="submit-btn"
+            data-city_id="330100"
+            data-el="submit-btn">预约咨询</button>
+        </div>
+        <div class="not-login" style="display: none">
+          <div class="not-login-phone">
+            <input
+              class="bottom-form-item bottom-form-phone"
+              data-el="phone-input"
+              type="text"
+              value=""
+              name="phone"
+              maxlength="11"
+              placeholder="请输入您的手机号">
+            <span class="send-msg-code" data-el="msgCode">发送验证码</span>
+          </div>
+          <div>
+            <input
+              class="bottom-form-item"
+              type="text"
+              value=""
+              data-el="inputMsgCode"
+              maxlength="6"
+              placeholder="请输入验证码">
+            <button
+              class="submit-btn"
+              data-city_id="330100"
+              data-el="submit-btn">预约咨询</button>
+          </div>
+        </div>
+      </div>
+      <i data-el="fix-bottom-close" data-event_id="25435" class="close"></i>
+    </div>
+  </div>
+</div>
+ -->
+  <script src="https://s1.ljcdn.com/agent-sj-sdk/1.5.0/agent-sj-sdk.js" crossorigin="anonymous"></script>
+
+<script>
+    g_conf.pageId = 'rentalList';
+  g_conf.requestId = '9121285827078';
+  g_conf.resblockId ='';
+  g_conf.joinstatus ='0';
+  g_conf.pcsource ='beike';
+
+  g_conf.total = '58012';
+  g_conf.cityId = '330100'
+  var __requireList = ['https://s1.ljcdn.com/matrix_pc/dist/pc/src/page/list/index.js?_v=202608311708077aa'];
+  document.getElementById('clearUrl').href = '/zufang/brp{min}erp{max}/'.split('zufang/')[0] + 'zufang/';
+
+</script>
+  </div>
+
+    <div class="footer">
+    <div class="footer__wrapper w1150">
+
+      <div class="footer__top">
+        <ul class="footer__light">
+                    <li><a href="/wzdt/">网站地图</a></li>
+                  </ul>
+        <a class="footer__aside hide" href="tel:10109666">客服电话<span>10109666</span></a>
+      </div>
+
+      <div class="footer__middle">
+        <ul data-el="parentList">
+                      <li><a class="cur" data-index="0" target="_blank">城市二手房</a></li>
+                      <li><a class="" data-index="1" target="_blank">房产资讯</a></li>
+                      <li><a class="" data-index="2" target="_blank">城区租房</a></li>
+                  </ul>
+                  <ul data-el="childrenList"  style="display:block">
+                          <li><a href="//bj.ke.com" target="_blank">北京房产网</a></li>
+                          <li><a href="//news.lianjia.com/bj/" target="_blank">北京房产资讯</a></li>
+                      </ul>
+                  <ul data-el="childrenList"  >
+                          <li><a href="//news.lianjia.com/bj/" target="_blank">北京房产资讯</a></li>
+                          <li><a href="//news.lianjia.com/bj/" target="_blank">北京房产资讯</a></li>
+                      </ul>
+                  <ul data-el="childrenList"  >
+                          <li><a href="//bj.lianjia.com/zufang/dongcheng/" target="_blank">东城租房</a></li>
+                          <li><a href="//news.lianjia.com/bj/" target="_blank">北京房产资讯</a></li>
+                      </ul>
+              </div>
+
+      <div class="footer__bottom">
+        <p>天津小屋信息科技有限公司 | <a style="color: #B7BBC3" href="http://beian.miit.gov.cn">津ICP备18000836号</a> |  &copy; Copyright &copy; 2010-2022 ke.com版权所有</p>
+        <p class="hide">京公网安备 11010802024019号</p>
+      </div>
+
+    </div>
+  </div>
+
+<script type="text/javascript">
+  var footerList = JSON.parse(JSON.stringify([{"class":"","title":"\u57ce\u5e02\u4e8c\u624b\u623f","children":[{"title":"\u5317\u4eac\u623f\u4ea7\u7f51","url":"\/\/bj.ke.com"},{"title":"\u5317\u4eac\u623f\u4ea7\u8d44\u8baf","url":"\/\/news.lianjia.com\/bj\/"}]},{"class":"","title":"\u623f\u4ea7\u8d44\u8baf","children":[{"title":"\u5317\u4eac\u623f\u4ea7\u8d44\u8baf","url":"\/\/news.lianjia.com\/bj\/"},{"title":"\u5317\u4eac\u623f\u4ea7\u8d44\u8baf","url":"\/\/news.lianjia.com\/bj\/"}]},{"class":"","title":"\u57ce\u533a\u79df\u623f","children":[{"title":"\u4e1c\u57ce\u79df\u623f","url":"\/\/bj.lianjia.com\/zufang\/dongcheng\/"},{"title":"\u5317\u4eac\u623f\u4ea7\u8d44\u8baf","url":"\/\/news.lianjia.com\/bj\/"}]}]))
+
+</script>
+
+</body>
+
+<!-- 登录弹窗sdk -->
+<script src="https://s1.ljcdn.com/clogin/js/pcLogin.js"></script>
+<script src="https://s1.ljcdn.com/captcha-js-sdk-v2/captcha.js"></script>
+
+<!--动态脚本内容-->
+
+<!-- 页面IM相关配置内容 -->
+
+
+<script type="text/javascript">
+  //引入脚本后
+  var imConf = {
+          "ajaxroot": "\/\/ajax.api.ke.com\/",
+          "imAppid": "BEIKEZUFANG_WEB_20180809",
+          "imAppkey": "f176ed588131309cb6fd3277bf5edf93"
+      }
+</script>
+
+<!-- 设备指纹接入 -->
+<script>
+  window['__abbaidu_2011_subidgetf'] = function () {
+    var subid = document.domain.search('ke.com') > -1 ? 110200 : 100200;
+    return subid;
+  }
+  window['__abbaidu_2011_cb'] = function (responseData) {
+    var fpStr = JSON.stringify({
+      t: responseData,
+      r: location.href,
+      os: 'web',
+      v: '0.1'
+    })
+    var fpBase = window.btoa(fpStr)
+    document.cookie = "srcid=" + fpBase +';path=/';
+  };
+</script>
+<script async="" src="https://dlswbr.baidu.com/heicha/mw/abclite-2011-s2.js"></script><!-- 百度seo自动推送代码 -->
+<script>
+  (function(){var canonicalURL,curProtocol;var x=document.getElementsByTagName("link");if(x.length>0){for(i=0;i<x.length;i++){if(x[i].rel.toLowerCase()=="canonical"&&x[i].href){canonicalURL=x[i].href}}}if(!canonicalURL){curProtocol=window.location.protocol.split(":")[0]}else{curProtocol=canonicalURL.split(":")[0]}if(!canonicalURL){canonicalURL=window.location.href}!function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase()==="https")?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window)})();
+</script>
+
+<!-- 落地时间因子 -->
+<script type="application/ld+json">
+  {
+    "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+    "@id": "https%3A%2F%2Fhz.zu.ke.com%2Fzufang%2F",
+    "appid": "1597146525691227",
+    "pubDate": "2026-09-12T10:13:32",
+    "upDate": "2026-09-12T10:13:32"
+  }
+</script>
+
+
+<!-- 页面依赖JS加载 -->
+
+<!-- common.js线上引入灯塔 -->
+  <script type="text/javascript" src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/common/common.js?_v=202608311708077aa" crossorigin="anonymous"></script>
+
+<script>
+  var __basePath = 'https://s1.ljcdn.com/matrix_pc/dist/pc/src?_v=202608311708077aa'.split("?") || [];
+  require.config({
+    //baseUrl: __basePath[0],
+    paths: {
+    },
+    urlArgs:  __basePath[1],
+    // 永不超时，requireJs的加载是一种异步机制，它加载js的时候有个默认的超时机制，因为网络原因或者资源找不到等原因引起的
+    //可以修改配置参数waitSeconds (默认为7秒，可以设置为0表示永远不超时，或者大一点的数字)
+    waitSeconds: 15,
+    crossorigin: Boolean('1') //线上环境加该属性,需要再amd.js中单独配置一下
+  });
+  var config = {"fe_root":"https:\/\/s1.ljcdn.com\/matrix_pc\/dist\/pc","version":"202608311708077aa","js_ns":"m_pages_zufangSearch","cur_city_id":"330100","cur_city_name":"\u676d\u5dde","cur_city_short":"hz"}
+  ;;(function() {
+    for(var i = 0, len = __requireList.length; i < len; i++) {
+      var item = __requireList[i]
+      item = item.split("?")[0]
+      require([item], function(engine) {
+        engine && engine.init()
+      })
+    }
+  })()
+</script>
+
+<!-- 埋点配置文件 -->
+
+<script>
+// window.$ULOG = window.$ULOG || {};
+window.__UDL_CONFIG = window.__UDL_CONFIG || {}
+window.__UDL_CONFIG.pid = window.__UDL_CONFIG.pid || "bigc_pc_rent"
+window.__UDL_CONFIG.env = ('prod' === 'prod' ? "dac" : 'test')
+window.__UDL_CONFIG["uicode"] = g_conf.pageId || ''
+// 如果是房源详情页，就注入uicode（按老逻辑，链家不注入这个，特殊处理）
+if (g_conf.pageId === 'rentalDetail') {
+  window.__UDL_CONFIG["uicode"] = g_conf.pageId || ''
+  window.__UDL_CONFIG.housedel_id = g_conf.houseCode || ''
+  window.__UDL_CONFIG.bu_desc = g_conf.bu_desc || ''
+}
+
+var _script = document.createElement('script')
+_script.type = 'text/javascript'
+// 该属性是为了配合接入灯塔，所有script标签都需加的属性
+_script.setAttribute('crossorigin', 'anonymous')
+document.getElementsByTagName('head')[0].appendChild(_script)
+// var target = ''
+// if (window.__UDL_CONFIG.env === 'test') {
+//   target = '//test.dig.lianjia.com/bigc.gif'
+//   if(location.host.indexOf('lianjia') > -1){
+//     target = '//test.dig.lianjia.com/t.gif'
+//   }
+// }
+// if (window.__UDL_CONFIG.env === 'lianjia') {
+//   target = '//dig.lianjia.com/t.gif'
+// }
+// if (window.__UDL_CONFIG.env === 'dac') {
+//   target = '//dig.lianjia.com/bigc.gif'
+// }
+// window.$ULOG.target = target
+if(window.__UDL_CONFIG.env === 'test'){
+  // _script.src='//s1.ljcdn.com/dig-log/static/2.1.0/lianjiaUlog.js?' + __basePath[1]
+  // test
+  // _script.src='//test-s1.ljcdn.com/matrix_pc/dist/pc/third/dig.js?' + __basePath[1]
+  // preview
+  _script.src='//preview-s1.ljcdn.com/matrix_pc/dist/pc/third/dig.js?' + __basePath[1]
+}else{
+  // _script.src='//s1.ljcdn.com/dig-log/static/2.1.0/lianjiaUlog.js?' + __basePath[1]
+  _script.src='//s1.ljcdn.com/matrix_pc/dist/pc/third/dig.js?' + __basePath[1]
+}
+</script>
+
+<!-- captcha sdk -->
+<script src="//s1.ljcdn.com/captcha-js-sdk-v2/captcha.js" crossorigin="anonymous"></script>
+
+<!-- 反爬 sdk -->
+<script src="https://s1.ljcdn.com/iceman/index.js" data-service="pc-rent" crossorigin="anonymous"></script>
+
+</html>

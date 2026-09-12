@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+01_house_capture/data/*.db
+01_house_capture/data/*.jsonl
+01_house_capture/data/cookie.txt

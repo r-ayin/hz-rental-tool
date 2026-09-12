@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>杭州租房画廊 · 贝壳</title>
+    <link rel="stylesheet" href="/assets/gallery.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <span class="logo">寓</span>
+      <nav class="nav-list" aria-label="主导航">
+        <button class="nav-item active" type="button">
+          <span class="nav-icon">⌂</span>
+          <span>首页</span>
+        </button>
+        <button class="nav-item" type="button">
+          <span class="nav-icon">◎</span>
+          <span>房源</span>
+        </button>
+        <button class="nav-item" id="crawlToggle" type="button">
+          <span class="nav-icon">✦</span>
+          <span>在线检索</span>
+        </button>
+        <button class="nav-item" id="settingsToggle" type="button">
+          <span class="nav-icon">⚙</span>
+          <span>设置</span>
+        </button>
+      </nav>
+
+      <section class="settings-panel" id="settingsPanel" aria-label="设置">
+        <p class="settings-title">样式</p>
+        <div class="style-options" role="group" aria-label="样式选项">
+          <button class="style-option active" data-theme="base1" type="button">基础1</button>
+          <button class="style-option" data-theme="glass1" type="button">玻璃1</button>
+        </div>
+      </section>
+
+      <section class="stats-panel" id="statsPanel" aria-label="数据概览">
+        <p class="settings-title">本地库</p>
+        <p class="stats-line"><span id="statTotal">0</span> 套房源</p>
+        <p class="stats-line">均价 <span id="statAvgRent">-</span> 元/月</p>
+      </section>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="search-wrap">
+          <input id="searchInput" type="search" placeholder="搜索小区、区域、商圈、户型、标签" autocomplete="off" />
+          <span class="search-icon">⌕</span>
+        </div>
+        <button id="crawlButton" class="primary-button" type="button">在线检索贝壳</button>
+      </header>
+
+      <section class="filter-bar" aria-label="筛选">
+        <select id="filterDistrict"><option value="">区域：不限</option></select>
+        <select id="filterRooms">
+          <option value="">户型：不限</option>
+          <option value="1">1室</option>
+          <option value="2">2室</option>
+          <option value="3">3室</option>
+          <option value="4">4室及以上</option>
+        </select>
+        <select id="filterPrice"><option value="">租金：不限</option></select>
+        <select id="filterRentType">
+          <option value="">方式：不限</option>
+          <option value="整租">整租</option>
+          <option value="合租">合租</option>
+          <option value="独栋">独栋公寓</option>
+        </select>
+        <select id="filterSort">
+          <option value="updated">最近更新</option>
+          <option value="rent_asc">租金从低到高</option>
+          <option value="rent_desc">租金从高到低</option>
+          <option value="area_desc">面积从大到小</option>
+        </select>
+        <span id="filterCount" class="filter-count"></span>
+      </section>
+
+      <section class="gallery-shell">
+        <div id="status" class="status">正在读取本地房源库...</div>
+        <div id="cardGrid" class="card-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <dialog id="detailDialog">
+      <article class="detail-panel">
+        <button id="closeDialog" class="close-button" type="button" aria-label="关闭">×</button>
+        <div id="detailContent"></div>
+      </article>
+    </dialog>
+
+    <dialog id="crawlDialog">
+      <article class="detail-panel crawl-panel">
+        <button id="closeCrawlDialog" class="close-button" type="button" aria-label="关闭">×</button>
+        <header class="detail-header">
+          <h1>在线检索 hz.zu.ke.com</h1>
+          <p class="detail-subtitle">服务端直接抓取贝壳杭州租房列表页并入库。
+            注意：贝壳对<b>分页/区域筛选/关键词检索</b>有登录墙，匿名通常只能抓首页综合列表；
+            如需全量检索，请在下方粘贴已登录浏览器的 Cookie（或保存到 data/cookie.txt），
+            或使用浏览器扩展在已登录页面内采集。</p>
+        </header>
+
+        <section class="crawl-form">
+          <div class="crawl-row">
+            <label>区域
+              <select id="crawlDistrict"><option value="">不限</option></select>
+            </label>
+            <label>价格档
+              <select id="crawlPrice"><option value="">不限</option></select>
+            </label>
+            <label>居室
+              <select id="crawlRooms"><option value="">不限</option></select>
+            </label>
+          </div>
+          <div class="crawl-row">
+            <label>方式
+              <select id="crawlRentType">
+                <option value="">不限</option>
+                <option value="whole">整租</option>
+                <option value="shared">合租</option>
+              </select>
+            </label>
+            <label>排序
+              <select id="crawlSort"><option value="">综合排序</option></select>
+            </label>
+            <label>页数
+              <input id="crawlPages" type="number" min="1" max="30" value="1" />
+            </label>
+          </div>
+          <label class="crawl-keyword">关键词
+            <input id="crawlKeyword" type="text" placeholder="如：滨江、地铁、loft（留空不限）" />
+          </label>
+          <label class="crawl-cookie">Cookie（可选，登录墙需要）
+            <textarea id="crawlCookie" rows="3" placeholder="粘贴 hz.zu.ke.com 的 Cookie；留空则尝试匿名抓取或使用 data/cookie.txt"></textarea>
+          </label>
+          <div class="crawl-actions">
+            <button id="crawlStart" class="primary-button" type="button">开始检索入库</button>
+            <span id="crawlStatus" class="crawl-status"></span>
+          </div>
+        </section>
+      </article>
+    </dialog>
+
+    <script src="/assets/gallery.js"></script>
+  </body>
+</html>
