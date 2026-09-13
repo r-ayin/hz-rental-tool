@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>hz-rental-tool · README 预览（OpenDesign bento）</title>
+<style>
+  :root {
+    --primary: #FAD4C0; --secondary: #80A1C1; --success: #16A34A;
+    --warning: #D97706; --danger: #DC2626; --surface: #FFF5E6; --text: #111827;
+    --card: #FFFFFF; --line: #F0E4D3; --muted: #6B7280;
+    --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px; --sp5: 24px; --sp6: 32px;
+    --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--surface); color: var(--text);
+    font: 16px/1.6 Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: var(--sp6) var(--sp5) 96px; }
+  header { text-align: center; padding: var(--sp6) 0 var(--sp5); }
+  header h1 { font-size: 32px; margin: 0 0 var(--sp2); letter-spacing: -0.5px; }
+  header p { margin: 0; color: var(--muted); font-size: 16px; }
+  .badges { margin-top: var(--sp4); display: flex; gap: var(--sp2); justify-content: center; flex-wrap: wrap; }
+  .badge { font: 600 12px/1 "JetBrains Mono", monospace; padding: 6px 12px; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--line); color: var(--text); }
+  .badge.acc { background: var(--primary); border-color: var(--primary); }
+  .badge.sec { background: var(--secondary); border-color: var(--secondary); color: #fff; }
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--sp4); margin: var(--sp5) 0; }
+  .cell { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: var(--sp4); text-align: center; transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+  .cell:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(17,24,39,.08); }
+  .cell b { display: block; font-size: 24px; font-weight: 800; }
+  .cell span { font-size: 12px; color: var(--muted); }
+  .cell.hot b { color: var(--danger); } .cell.good b { color: var(--success); } .cell.sec b { color: var(--secondary); }
+  section { margin: var(--sp6) 0; }
+  h2 { font-size: 20px; margin: 0 0 var(--sp4); display: flex; align-items: center; gap: var(--sp2); }
+  h2::before { content: ""; width: 4px; height: 20px; border-radius: 2px; background: var(--primary); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--sp4); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: var(--sp4); }
+  .card h3 { margin: 0 0 var(--sp2); font-size: 16px; }
+  .card p { margin: 0; font-size: 14px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; overflow: hidden; font-size: 14px; }
+  th, td { padding: 10px var(--sp3); text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--primary); font-weight: 700; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { font-family: "JetBrains Mono", monospace; font-weight: 700; }
+  ol li, ul li { margin-bottom: var(--sp2); }
+  .note { font-size: 12px; color: var(--muted); margin-top: var(--sp2); }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill.ok { background: #E8F6EC; color: var(--success); } .pill.bad { background: #FDE8E8; color: var(--danger); }
+  .pill.warn { background: #FBF0E0; color: var(--warning); }
+  footer { margin-top: var(--sp6); padding-top: var(--sp4); border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--muted); text-align: center; }
+  @media (max-width: 720px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏠 hz-rental-tool</h1>
+    <p>杭州租房全链路工具 —— 贝壳 hz.zu.ke.com 批量检索 → 路网几何硬校验 → VLM 照片质检 → 性价比排名</p>
+    <div class="badges">
+      <span class="badge acc">Python 标准库</span><span class="badge sec">Firefox MV2</span>
+      <span class="badge">qwen3.8-flash 视觉</span><span class="badge">Valhalla/OSM 路网</span>
+      <span class="badge">零明文凭据</span>
+    </div>
+  </header>
+
+  <div class="bento">
+    <div class="cell sec"><b>668</b><span>去重采集入库</span></div>
+    <div class="cell good"><b>84</b><span>全硬条件命中</span></div>
+    <div class="cell"><b>69/84</b><span>视觉质检完成</span></div>
+    <div class="cell hot"><b>7</b><span>假照片识破</span></div>
+    <div class="cell good"><b>~100×</b><span>相比人工效率</span></div>
+    <div class="cell"><b>0</b><span>明文凭据入库</span></div>
+  </div>
+
+  <section>
+    <h2>功能</h2>
+    <div class="cards">
+      <div class="card"><h3>批量条件检索</h3><p>区域×居室×价格档×整租/合租×关键词×页码 笛卡尔组合；护栏：单次≤10页 / 单日≤30页 / 间隔≥60s</p></div>
+      <div class="card"><h3>硬条件几何校验</h3><p>步行≤1km 用 Valhalla 真实路网（非直线）；电动车≤60min = 骑行距离/20km/h + 4min</p></div>
+      <div class="card"><h3>VLM 照片质检</h3><p>新旧/装修/整洁 1-5 分、明厨明卫、窗外树景；假照片识别（营业执照/二维码/公司大厅）</p></div>
+      <div class="card"><h3>性价比排名</h3><p>面积/月租 主榜 + 最低租金 / 最大面积 / 最短通勤 三取向榜 + Excel 全字段导出</p></div>
+      <div class="card"><h3>双通道采集</h3><p>扩展人工节奏（批量/自动翻页/详情保存）+ 服务端低频检索</p></div>
+      <div class="card"><h3>本地画廊</h3><p>卡片墙 / 五维筛选 / 详情弹窗 / 在线检索面板 / 一键视觉评分 / 双主题</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>反检测方式（WAF 事故实证后设计）</h2>
+    <table>
+      <tr><th>层</th><th>措施</th><th>实证依据</th></tr>
+      <tr><td>请求节奏</td><td>串行 + 2.5–4.5s 抖动；每 5 页休息 3–6s；护栏 60s/30页日/10页次</td><td><span class="pill bad">6 并发 → 43×403</span> <span class="pill ok">串行 35/35 全过</span></td></tr>
+      <tr><td>请求指纹</td><td>真实 UA + Sec-Fetch-* 导航头 + Referer 链 + CookieJar 会话复用</td><td><span class="pill warn">fetch cors 指纹被识 → 改 navigate</span></td></tr>
+      <tr><td>采集载体</td><td>已登录真实浏览器扩展为主通道；服务端低频补充</td><td><span class="pill warn">Cookie 跨环境复用=封禁诱因</span></td></tr>
+      <tr><td>被拦行为</td><td>403/WAF/验证码立即停；不重试硬撞、不代理池轮换</td><td><span class="pill bad">104 页/1h 会话冷却事故</span></td></tr>
+      <tr><td>凭据合规</td><td>Cookie/AK 运行时 env 读取，gitignore 双保险</td><td><span class="pill ok">git log -S 零命中</span></td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>创新点</h2>
+    <ol>
+      <li><b>硬条件几何校验管线</b>：OSM/高德 geocode 329/329 命中 + Valhalla 步行/骑行双路由；路网步行比直线平均长 0.2km、最长 0.67km</li>
+      <li><b>VLM 质检 + 假照片识别</b>：结构化 JSON 评分；识破 7/84 = 8.3% 假照片</li>
+      <li><b>实证护栏双通道采集</b>：并发=1 / 60s / 30页日 全部来自 WAF 事故实测</li>
+      <li><b>CDP 同源导航补图</b>：真实浏览器 navigate 模式，规避 cors 指纹</li>
+      <li><b>多目标决策输出</b>：主榜 + 三取向 + Excel，一次运行多视图</li>
+      <li><b>全链路本地化与凭据隔离</b>：端点可插拔、仓库零明文</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>量化收益（实测 + 假设标注）</h2>
+    <table>
+      <tr><th>步骤</th><th>人工基线</th><th>本工具实测</th></tr>
+      <tr><td>浏览 700 套列表+详情</td><td class="num">17.5h</td><td class="num">爬取 2min</td></tr>
+      <tr><td>100 候选地图步行/通勤核验</td><td class="num">6.7h</td><td class="num">路由 6min（267 次步行路由）</td></tr>
+      <tr><td>100 候选照片/实况甄别</td><td class="num">3.3h</td><td class="num">视觉 8min（84 套）</td></tr>
+      <tr><td><b>合计</b></td><td class="num"><b>≈27.5h</b></td><td class="num"><b>≈16min（≈100×）</b></td></tr>
+      <tr><td>假照片避免无效看房</td><td class="num">7×2.5h ≈ 17.5h</td><td class="num">0（线上已识破）</td></tr>
+    </table>
+    <p class="note">质检画像（62 套实拍）：新旧 3.3 / 装修 2.8 / 整洁 4.1；明厨 5 · 明卫 1 · 树景 15；月租均值 5,439（最低 1,600）；面积均值 109.2㎡（最大 321㎡）；步行均值 0.66km；电动车均值 40min（最快 9min）。假设：浏览 1.5min/套、核验 4min/套、甄别 2min/套、看房 2.5h/次。</p>
+  </section>
+
+  <footer>视觉设计：OpenDesign 「bento」设计系统（#FFF5E6 / #FAD4C0 / #80A1C1 / Inter）· 合规：个人找房用途，限速护栏内置，被拦即停</footer>
+</div>
+</body>
+</html>

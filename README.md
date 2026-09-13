@@ -1,128 +1,122 @@
-# 杭州租房工具（贝壳 hz.zu.ke.com）
+<div align="center">
 
-> 由 [fde-job-search / FDE_JobSearch](https://github.com/Guuumiho/FDE_JobSearch)（BOSS 直聘 JD 采集 MVP）全面重构而来：
-> 同样的「浏览器扩展采集 + 本地服务入库 + 画廊前端」架构，检索对象换成 **贝壳找房·杭州租房（hz.zu.ke.com/zufang）**。
+# 🏠 hz-rental-tool
 
-![房源画廊](01_house_capture/docs/screenshot.png)
+**杭州租房全链路工具** —— 贝壳 `hz.zu.ke.com` 批量检索 → 路网几何硬校验 → VLM 照片质检 → 性价比排名
 
-## 它能做什么
+`Python 标准库` · `Firefox MV2 扩展` · `qwen3.8-flash 视觉` · `Valhalla/OSM 路网` · `零第三方依赖` · `零明文凭据`
 
-- **在线检索**：本地服务直接抓取 `hz.zu.ke.com/zufang` 列表页（区域/价格档/居室/整租合租/关键词/排序/多页），解析后入库；
-- **浏览器扩展采集**：在你已登录的贝壳页面里，列表页「采集本页 / 自动翻页」、详情页「保存房源 / 导出TXT」；
-- **本地房源库**：SQLite + JSONL 双写，URL 去重（重复抓取自动更新而非新增）；
-- **画廊前端**：卡片墙（图片/月租/标签/户型面积朝向楼层）、五维筛选、关键词搜索、四种排序、详情弹窗、区域均价统计、双主题。
+</div>
 
-## 架构
+---
+
+## 📊 一句话成绩（2026-09 杭州实测）
+
+| 668 套 | 84 套 | 69/84 | 7 套 | ~100× | 0 |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| 去重采集入库 | 全硬条件命中 | 视觉质检完成 | 假照片识破 | 相比人工效率 | 明文凭据入库 |
+
+> 硬条件 = 两室一厅及以上 · 整租非公寓 · **步行 ≤1km（真实路网）** · **电动车 ≤60min 到海创园** · 面积≥45㎡
+
+---
+
+## ✨ 功能
+
+- **批量条件检索**：区域 × 居室 × 价格档 × 整租/合租 × 关键词 × 页码 笛卡尔组合一键跑；单次 ≤10 页、单日 ≤30 页、间隔 ≥60s 的内置护栏
+- **硬条件几何校验**：步行距离用 **Valhalla 真实路网路由**（非平台直线距离）；电动车通勤 = 骑行路由距离 / 20km/h + 4min 缓冲
+- **VLM 照片质检**：qwen3.8-flash 对房源照片结构化打分（新旧/装修/整洁 1-5 分、明厨/暗厨、明卫/暗卫、窗外树景/城景）+ **假照片识别**（营业执照/二维码/公司大厅等非实拍）
+- **性价比排名**：面积/月租 降序主榜 + 最低租金 / 最大面积 / 最短通勤 三个取向榜
+- **双通道采集**：Firefox 扩展人工节奏（列表页批量/自动翻页/详情页保存/导出TXT）+ 服务端低频检索
+- **本地画廊**：卡片墙、五维筛选、搜索、排序、详情弹窗、在线检索面板、双主题；详情页一键视觉评分
+
+## 🕗 架构
 
 ```mermaid
 graph LR
-  A["Firefox 扩展<br/>content.js 浮动按钮"] -->|POST /api/houses| C
-  B["服务端爬虫 crawler.py<br/>hz.zu.ke.com 列表页"] --> C["server.py :8765<br/>SQLite houses + JSONL"]
-  C --> D["画廊前端<br/>筛选/搜索/排序/详情/在线检索"]
+  A["Firefox 扩展<br/>列表批量/自动翻页/详情保存"] -->|POST /api/houses| C
+  B["crawler.py 服务端检索<br/>护栏: 60s间隔/30页日/10页次"] -->|每页入库| C["server.py<br/>SQLite + JSONL 双写"]
+  C --> D["几何管线<br/>Overpass/高德 geocode<br/>Valhalla 步行+骑行路由"]
+  C --> E["vision.py<br/>qwen3.8-flash 照片质检"]
+  D --> F["画廊前端<br/>筛选/排名/详情/视觉报告"]
+  E --> F
 ```
 
-### 站点约束（2026-09 实测，重要）
+## 🛡 反检测方式（WAF 事故实证后的设计）
 
-| 页面 | 匿名访问 | 说明 |
-|------|:--:|------|
-| `/zufang/` 综合首页（30 条/页） | ✅ | 服务端爬虫默认入口 |
-| 分页 `/zufang/pg2/`、区域/价格/居室/关键词筛选页 | ❌ 登录墙 | 需提供 Cookie（`data/cookie.txt` 或检索面板），或用扩展在已登录浏览器内采集 |
-| 详情页 `/zufang/HZ*.html` | ❌ 登录页 | 仅扩展（用户浏览器内）可采集详情字段与描述 |
+| 层 | 措施 | 实证依据 |
+|---|---|---|
+| 请求节奏 | 串行 + 2.5–4.5s 随机抖动；每 5 页额外休息 3–6s；护栏 60s/30页日/10页次 | 6 并发阶段 → 43×`403 访问已被拦截`；串行低频阶段 35/35 全过 |
+| 请求指纹 | 真实浏览器 UA + `Sec-Fetch-*` 导航头 + 上一页 Referer 链 + CookieJar 会话复用 | 页内 `fetch()` 的 `cors` 指纹被识别 → 改真实导航 `navigate` |
+| 采集载体 | 用户**已登录真实浏览器**扩展为主通道（真指纹、人工节奏）；服务端仅作低频补充 | 同一 Cookie 跨 VM/浏览器两环境复用 = 会话共享异常，是封禁诱因之一 |
+| 被拦行为 | 403/WAF/验证码 → **立即停** + 可操作提示；不重试硬撞、不代理池轮换 | 104 页/1h 会话冷却事故复盘 |
+| 凭据合规 | Cookie/AK 零明文：运行时读 `~/.idealab.env`、`data/cookie.txt`（均 gitignore） | 全历史 `git log -S` 检索零命中 |
 
-命中登录墙时服务端返回 `login_required` 并给出目标 URL 与建议；扩展路线不受影响。
+## 🚀 创新点
 
-### 筛选 URL 规则（实测）
+1. **硬条件几何校验管线**：平台筛选只有直线距离/地铁线；本项目用 OSM/高德 geocode（329/329 小区命中）+ Valhalla 步行/骑行双路由批量校验。实测路网步行比直线距离**平均长 0.2km、最长 0.67km**——直线口径会系统性低估步行成本
+2. **VLM 房源质检 + 假照片识别**：结构化 JSON 评分而非通用描述；实测识破 **7/84 = 8.3%** 假照片（营业执照、二维码、公司大厅）
+3. **实证护栏的双通道采集**：把反爬从「对抗」改为「合规低频 + 人工节奏」，护栏参数（并发=1、60s、30页/日）全部来自 WAF 事故实测
+4. **CDP 同源导航补图**：复用用户真实浏览器会话以 navigate 模式补详情页照片，规避程序化 fetch 的 cors 指纹
+5. **多目标决策输出**：性价比主榜 + 三取向榜 + Excel 全字段导出，一次运行产出多种决策视图
+6. **全链路本地化与凭据隔离**：SQLite/JSONL 双写、视觉/路由/geocode 端点全部可插拔、仓库零明文
 
-`https://hz.zu.ke.com/zufang/[区域slug]/[pg页码][rt方式][rp价格档][l居室][排序][rs关键词]/`
+## 🔬 与同类实现的差异
 
-- 区域：`shangchengqu` `gongshuqu` `xihuqu4`（注意西湖区 slug 带 4）`binjiangqu` `xiaoshanqu` `yuhangqu` `linpingqu` `qiantangqu` `fuyangqu` `linanqu` `jiandeshi` `tongluxian` `chunanxian` `hainingshi`
-- 价格档：`rp1` ≤1000 … `rp8` ≥10000（8 档）
-- 居室：`l0` 一居 / `l1` 两居 / `l2` 三居 / `l3` 四居+
-- 方式：`rt200600000001` 整租 / `rt200600000002` 合租
-- 排序：`rco11` 最新上架 / `rco21` 价格
+| 维度 | 本项目 | 原 FDE_JobSearch | 通用无头爬虫(Scrapy/Selenium) | 贝壳 App 自带筛选 | 地图 App 通勤查询 |
+|---|---|---|---|---|---|
+| 采集通道 | 扩展人工节奏 + 服务端护栏低频 | 仅扩展单页保存 | 无头指纹，易触发 WAF | 不采集 | 不采集 |
+| 硬条件校验 | 路网步行 + 电动车通勤**批量**校验 | 无 | 无 | 仅直线/地铁线 | 单条手工查询 |
+| 照片质检 | VLM 结构化评分 + 假照片识别 | 无 | 无 | 无 | 无 |
+| 反检测策略 | 合规低频 + 实证护栏 + 被拦即停 | 无 | 代理池对抗（高风险） | — | — |
+| 凭据合规 | 零明文、运行时 env | 无 | 常硬编码 | — | — |
+| 决策输出 | 性价比榜 + 三取向 + Excel | 简单卡片列表 | 原始数据 | 平台排序 | 单条路线 |
 
-## 快速开始
+## 📈 量化收益估计
+
+**筛选漏斗（实测）**
+
+| 阶段 | 数量 | 说明 |
+|---|---:|---|
+| 线上总房源 | 58,012 | 贝壳杭州租房 |
+| 采样去重入库 | 668（+匿名 35 = 703） | 24 页登录态 + 1 页匿名，采样率 1.2% |
+| 硬条件命中 | 84（12.0%） | 步行≤1km 且 电动车≤60min 且 两室一厅+ 整租非公寓 |
+| 视觉可评估 | 69（82%） | 实拍 62 + 假照片 7；≤2500 元 13 套 |
+
+**质检画像（62 套实拍）**：新旧 3.3 / 装修 2.8 / 整洁 4.1（均值，5 分制）；明厨 5 套、明卫 1 套、窗外树景 15 套；月租均值 5,439 元（最低 1,600）；面积均值 109.2㎡（最大 321㎡）；步行均值 0.66km；电动车均值 40min（最快 9min）
+
+**时间收益（假设标注于表下）**
+
+| 步骤 | 人工基线 | 本工具实测 | 倍数 |
+|---|---:|---:|:--:|
+| 浏览 700 套列表+详情 | 17.5h（1.5min/套） | 爬取 2min | — |
+| 100 候选地图步行/通勤核验 | 6.7h（4min/套） | 路由 6min（267 次步行路由） | — |
+| 100 候选照片/实况甄别 | 3.3h（2min/套） | 视觉 8min（84 套） | — |
+| **合计** | **≈27.5h** | **≈16min** | **≈100×** |
+| 假照片避免无效看房 | 7 套 × 2.5h ≈ 17.5h | 0（线上已识破） | — |
+
+> 假设：人工浏览 1.5min/套、地图核验 4min/套、照片甄别 2min/套、看房 2.5h/次（含通勤）；工具时间为本次会话实测墙钟。
+
+## ⚡ 快速开始
 
 ```bash
-# 1. 启动本地服务（默认 http://127.0.0.1:8765，可用环境变量 RENTAL_PORT 改端口）
-cd 01_house_capture/local-service
-python3 server.py          # Windows: 双击 run.cmd 或 python server.py
-
-# 2. 打开画廊
-#    http://127.0.0.1:8765/
-
-# 3.（可选）安装 Firefox 扩展：about:debugging → 此电脑 → 加载临时附加组件
-#    选择 01_house_capture/firefox-house-capture/manifest.json
-#    然后打开 hz.zu.ke.com/zufang，用浮动按钮采集
+cd 01_house_capture/local-service && python3 server.py   # http://127.0.0.1:8765
+# Firefox: about:debugging → 加载临时附加组件 → firefox-house-capture/manifest.json
+# 视觉凭据: ~/.idealab.env 写 IDEALAB_AK=<your-key>（不入仓库）
 ```
 
-无第三方依赖：Python 标准库 + 原生 JS。
-
-## API
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/api/houses?q=&district=&rooms=&minRent=&maxRent=&rentType=&sort=` | 筛选后的房源列表（sort: updated/rent_asc/rent_desc/area_desc/area_asc） |
-| POST | `/api/houses` | 入库：`{houses:[...]}` / `{house:{...}}` / 单个对象 / 数组，按 url upsert |
-| POST | `/api/crawl` | 在线检索：`{district, priceTier, rooms, rentType, sort, keyword, pages, cookie?}` |
-| GET | `/api/meta` | 筛选项元数据（区域/价格档/居室/方式/排序/Cookie 状态） |
-| GET | `/api/stats` | 总数、均价、分区域统计 |
-| GET | `/health` | 健康检查 |
-
-## 目录结构
+## 📁 结构
 
 ```text
-hz-rental-tool/
-└── 01_house_capture/
-    ├── firefox-house-capture/      # Firefox 扩展（MV2）
-    │   ├── manifest.json
-    │   ├── background.js           # 转发 POST /api/houses、导出TXT下载
-    │   └── content.js              # 列表页批量/翻页采集、详情页保存
-    ├── local-service/
-    │   ├── server.py               # HTTP 服务 + SQLite/JSONL 存储 + API
-    │   ├── crawler.py              # hz.zu.ke.com 抓取/解析/URL 构造（纯标准库）
-    │   ├── run.cmd / run.sh
-    │   └── public/                 # 画廊前端（index.html + assets）
-    ├── data/                       # houses.db / houses.jsonl / cookie.txt（gitignore）
-    └── tests/
-        ├── test_parser.py          # 解析器离线测试（9 用例）
-        └── fixtures/               # 真实列表页样本
+01_house_capture/
+├── firefox-house-capture/   # 扩展：列表批量/自动翻页/详情保存/导出
+├── local-service/           # server.py + crawler.py + vision.py + 画廊前端
+├── data/                    # houses.db / houses.jsonl / cookie.txt（gitignore）
+├── docs/readme-preview.html # OpenDesign(bento) 设计的 README 预览页
+└── tests/                   # 解析器测试 + 真实页面 fixture
+scripts/                     # vision_batch / cdp 补图 / mac 一键抓取
 ```
 
-## 反检测与礼貌抓取
+## ⚖️ 合规
 
-继承原仓库的核心思路（**在用户真实浏览器内采集**：真实登录态、真实指纹、真实 DOM 点击），
-并为新增的服务端爬虫补齐防护层：
-
-| 层 | 措施 |
-|----|------|
-| 请求头 | 真实桌面 UA + 完整 Sec-Fetch-* 导航头；同会话头部保持一致（不逐请求轮换，避免更可疑）；翻页携带上一页 Referer |
-| 会话 | CookieJar 复用服务端下发的会话 Cookie（风控 token 等），贴近真实浏览器 |
-| 节奏 | 页间隔 = 基础 1.5s + 0.5~2.5s 随机抖动；每 5 页额外"休息" 3~6s；单次上限 30 页；两次检索启动间隔 ≥5s；同一时刻仅一个检索任务（锁） |
-| 失败策略 | 403/429 → `risk_control` 立即停（不硬撞）；5xx/网络错误 → 指数退避（2/4/8s+抖动）最多 3 次；登录墙 → `login_required`；人机验证 → `captcha` 立即停 |
-| 扩展端 | 采集前模拟真人分段滚动阅读；翻页/提交间隔随机（humanDelay）；落到验证页自动停止自动翻页并提示；sessionStorage 跨页续采带剩余页数上限 |
-| 图片/前端 | `referrerpolicy="no-referrer"` 绕过图床防盗链，且不向图床泄漏本页来源 |
-
-原则：**被拦即停、给出可操作提示**，绝不静默重试或换端点硬撞；全量筛选检索优先走已登录浏览器扩展通道。
-
-## 视觉评估（qwen3.8-flash）
-
-对房源照片自动打分与标注：新旧/装修/整洁（1-5 分）、明厨/暗厨、明卫/暗卫、窗外景观（树景/城景/无视野）、亮点与问题清单、一句话总评。
-
-- 触发：前端详情弹窗「视觉评估」区一键评分；或 `POST /api/vision {"url": ...}`；批量 `python3 scripts/vision_batch.py urls.txt`
-- 照片来源：库内已有详情图，否则用已存 Cookie 抓详情页解析（`crawler.parse_detail_images`）
-- 配置：`VISION_API_BASE` / `VISION_API_KEY` / `VISION_MODEL` 环境变量；默认 idealab Anthropic 网关 + `~/.idealab.env` 的 AK + `qwen3.8-flash`
-- 结果存 `houses.vision_report`；模型只依据照片可见证据判断，房东传非实拍图（营业执照/二维码等）会明确标注无法评估
-
-## 测试
-
-```bash
-cd 01_house_capture
-python3 tests/test_parser.py
-```
-
-## 合规提示
-
-- 仅供个人找房使用；抓取频率默认保守（页间隔 1.5s、单次上限 30 页）；
-- 请遵守贝壳的服务条款与 robots 约定，勿用于商业再分发；
-- Cookie 仅存本地 `data/cookie.txt`，不会上传任何第三方。
+个人找房用途；抓取限速护栏内置、冷却期不重试、不绕过封禁；被拦即停并提示人工通道。
+README 视觉设计遵循 OpenDesign `bento` 设计系统（#FFF5E6 面 / #FAD4C0 强调 / Inter）与 craft 规则；预览见 [`docs/readme-preview.html`](docs/readme-preview.html)。
