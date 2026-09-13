@@ -19,7 +19,9 @@ import urllib.request
 DEFAULT_BASE = "https://idealab.alibaba-inc.com/api/code/v1/messages"
 DEFAULT_MODEL = "qwen3.8-flash"
 MAX_PHOTOS = 6
-REFERER = "https://hz.zu.ke.com/"
+import site_config
+
+REFERER = site_config.referer()
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
 

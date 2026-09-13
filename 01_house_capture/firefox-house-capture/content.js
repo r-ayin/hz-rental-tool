@@ -1,4 +1,4 @@
-/* 贝壳租房采集 content script —— 运行在 hz.zu.ke.com（用户已登录的浏览器内）。
+/* 一秒选房采集 content script —— 运行在目标站点（*.zu.ke.com 族域名，城市可配置；用户已登录的浏览器内）。
  *
  * 列表页：浮动面板「采集本页 / 自动翻页 / 停止」
  *   - 采集本页：解析当前页全部房源卡片，批量 POST 到本地服务
@@ -85,7 +85,7 @@
   }
 
   function reportError(context, error) {
-    console.error(`[贝壳租房采集] ${context}`, error);
+    console.error(`[一秒选房采集] ${context}`, error);
     alert(`${context}失败：${error.message || error}\n\n请确认本地服务已启动：http://127.0.0.1:8765`);
   }
 

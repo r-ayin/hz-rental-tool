@@ -1,4 +1,4 @@
-/* 杭州租房画廊前端逻辑：加载本地房源库、筛选/排序/搜索、详情弹窗、服务端在线检索。 */
+/* 一秒选房画廊前端逻辑：加载本地房源库、筛选/排序/搜索、详情弹窗、服务端在线检索（城市可配置）。 */
 const themeKey = "rental-gallery-theme";
 const cardGrid = document.querySelector("#cardGrid");
 const statusEl = document.querySelector("#status");
@@ -196,7 +196,7 @@ function render(houses) {
   filterCount.textContent = `${houses.length} 套`;
   if (!houses.length) {
     statusEl.style.display = "block";
-    statusEl.textContent = "没有匹配的房源。可用「在线检索贝壳」抓取，或在贝壳页面上用扩展采集。";
+    statusEl.textContent = "没有匹配的房源。可用「在线检索」抓取，或在目标站点页面上用扩展采集。";
     cardGrid.innerHTML = "";
     return;
   }
@@ -251,7 +251,7 @@ function renderDetail(house) {
         ${house.rent_type ? ` · ${escapeHtml(house.rent_type)}` : ""}
         ${house.community ? ` · ${escapeHtml(house.community)}` : ""}
       </p>
-      ${house.url ? `<a class="open-link" href="${escapeHtml(house.url)}" target="_blank" rel="noreferrer">打开贝壳原始房源</a>` : ""}
+      ${house.url ? `<a class="open-link" href="${escapeHtml(house.url)}" target="_blank" rel="noreferrer">打开原始房源</a>` : ""}
     </header>
 
     ${images.length ? `<section class="detail-images">${images.slice(0, 6).map((src) =>
@@ -331,7 +331,7 @@ async function runCrawl() {
       crawlStatus.textContent = `完成：抓取 ${data.fetched} 条，入库 ${data.saved} 条（${data.pages?.length || 0} 页）`;
       await Promise.all([loadHouses(), loadStats()]);
     } else if (data.error === "login_required") {
-      crawlStatus.innerHTML = `贝壳要求登录，本次未能抓取。${data.first_url ? `目标页：<a href="${escapeHtml(data.first_url)}" target="_blank" rel="noreferrer">${escapeHtml(data.first_url)}</a>` : ""}<br/>方案：① 粘贴已登录 Cookie 重试；② 在浏览器打开目标页，用扩展「采集本页/自动翻页」。`;
+      crawlStatus.innerHTML = `目标站点要求登录，本次未能抓取。${data.first_url ? `目标页：<a href="${escapeHtml(data.first_url)}" target="_blank" rel="noreferrer">${escapeHtml(data.first_url)}</a>` : ""}<br/>方案：① 粘贴已登录 Cookie 重试；② 在浏览器打开目标页，用扩展「采集本页/自动翻页」。`;
     } else {
       crawlStatus.textContent = `检索失败：${data.message || data.error || "未知错误"}`;
     }

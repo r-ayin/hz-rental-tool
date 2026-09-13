@@ -1,0 +1,11 @@
+{
+  "_comment": "城市预设示例（杭州）。cp docs/site.example.json 01_house_capture/data/site.json 启用；其它城市改 city_slug/city_name/city_bbox/commute_destination 即可，无需改代码。",
+  "city_slug": "hz",
+  "city_name": "杭州市",
+  "source_url_pattern": "https://{city}.zu.ke.com",
+  "list_path": "/zufang/",
+  "commute_destination": "30.2826567,120.0155745",
+  "city_bbox": [29.95, 119.55, 30.60, 120.75],
+  "amap_city_code": "330100",
+  "districts": []
+}

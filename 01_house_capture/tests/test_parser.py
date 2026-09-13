@@ -1,4 +1,4 @@
-"""crawler 解析器离线测试：用真实抓取的 hz.zu.ke.com 列表页样本验证。
+"""crawler 解析器离线测试：用真实抓取的列表页样本（样例城市 fixture）验证。
 
 运行：cd 01_house_capture && python3 -m tests.test_parser
 或：python3 tests/test_parser.py
@@ -11,6 +11,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "local-service"))
 
 import crawler  # noqa: E402
+import site_config  # noqa: E402
+
+BASE = site_config.base_url()  # 站点根来自配置层，测试不硬编码
 
 FIXTURE = Path(__file__).resolve().parent / "fixtures" / "zufang_list_sample.html"
 
@@ -29,12 +32,12 @@ class ParseListPageTest(unittest.TestCase):
     def test_all_items_parsed(self):
         self.assertEqual(len(self.result["houses"]), 30)
         for house in self.result["houses"]:
-            self.assertTrue(house["url"].startswith("https://hz.zu.ke.com/"))
+            self.assertTrue(house["url"].startswith(BASE + "/"))
             self.assertTrue(house["title"])
 
     def test_first_house_fields(self):
         house = self.result["houses"][0]
-        self.assertEqual(house["url"], "https://hz.zu.ke.com/zufang/HZ2177359430218153984.html")
+        self.assertEqual(house["url"], BASE + "/zufang/HZ2177359430218153984.html")
         self.assertEqual(house["house_code"], "HZ2177359430218153984")
         self.assertEqual(house["title"], "整租·理想康城国际 3室2厅 南")
         self.assertEqual(house["rent_type"], "整租")
@@ -63,7 +66,7 @@ class ParseListPageTest(unittest.TestCase):
 
 class BuildUrlTest(unittest.TestCase):
     def test_plain_list(self):
-        self.assertEqual(crawler.build_list_url(), "https://hz.zu.ke.com/zufang/")
+        self.assertEqual(crawler.build_list_url(), BASE + "/zufang/")
 
     def test_full_filters(self):
         url = crawler.build_list_url(
@@ -72,19 +75,23 @@ class BuildUrlTest(unittest.TestCase):
         )
         self.assertEqual(
             url,
-            "https://hz.zu.ke.com/zufang/xihuqu4/pg2rt200600000001rp3l1rco11rs%E5%9C%B0%E9%93%81/",
+            BASE + "/zufang/xihuqu4/pg2rt200600000001rp3l1rco11rs%E5%9C%B0%E9%93%81/",
         )
 
     def test_page_one_no_token(self):
         url = crawler.build_list_url(district="binjiangqu", page=1, rent_type="shared")
-        self.assertEqual(url, "https://hz.zu.ke.com/zufang/binjiangqu/rt200600000002/")
+        self.assertEqual(url, BASE + "/zufang/binjiangqu/rt200600000002/")
 
-    def test_district_slugs(self):
-        names = {d["name"] for d in crawler.DISTRICTS}
+    def test_district_dynamic_discovery(self):
+        """区域表零硬编码：从列表页动态发现（样例 fixture 应能发现西湖区等）。"""
+        fixture = FIXTURE.read_text(encoding="utf-8")
+        discovered = crawler.parse_districts(fixture)
+        names = {d["name"] for d in discovered}
         for expected in ("西湖区", "滨江区", "余杭区", "萧山区", "上城区"):
             self.assertIn(expected, names)
-        xihu = next(d for d in crawler.DISTRICTS if d["name"] == "西湖区")
+        xihu = next(d for d in discovered if d["name"] == "西湖区")
         self.assertEqual(xihu["slug"], "xihuqu4")
+        self.assertEqual(crawler.DISTRICTS, [])  # 无 site.json 时静态表为空，全靠动态发现
 
 
 class PolitenessAndAntiDetectionTest(unittest.TestCase):
@@ -110,9 +117,9 @@ class PolitenessAndAntiDetectionTest(unittest.TestCase):
         self.assertEqual(headers["Sec-Fetch-Mode"], "navigate")
         self.assertEqual(headers["Sec-Fetch-Site"], "none")
         self.assertNotIn("Referer", headers)
-        with_ref = crawler.build_headers(referer="https://hz.zu.ke.com/zufang/")
+        with_ref = crawler.build_headers(referer=BASE + "/zufang/")
         self.assertEqual(with_ref["Sec-Fetch-Site"], "same-origin")
-        self.assertEqual(with_ref["Referer"], "https://hz.zu.ke.com/zufang/")
+        self.assertEqual(with_ref["Referer"], BASE + "/zufang/")
         with_cookie = crawler.build_headers(cookie="lianjia_uuid=abc")
         self.assertEqual(with_cookie["Cookie"], "lianjia_uuid=abc")
 

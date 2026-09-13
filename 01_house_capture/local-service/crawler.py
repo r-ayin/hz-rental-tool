@@ -1,4 +1,4 @@
-"""贝壳租房（hz.zu.ke.com）列表页抓取与解析模块。
+"""目标站点租房列表页抓取与解析模块（站点/城市经 site_config 配置，全国通用）。
 
 纯标准库实现（urllib + re），无第三方依赖。
 
@@ -19,7 +19,12 @@ import time
 import urllib.error
 import urllib.request
 
-BASE_URL = "https://hz.zu.ke.com"
+import site_config
+
+
+def base_url():
+    """站点根地址：来自配置层（env / data/site.json），零硬编码。"""
+    return site_config.base_url()
 LIST_PATH = "/zufang/"
 DEFAULT_TIMEOUT = 20
 USER_AGENT = (
@@ -27,23 +32,22 @@ USER_AGENT = (
     "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 )
 
-# 行政区（slug 实测自站点筛选栏；注意西湖区的 slug 是 xihuqu4）
-DISTRICTS = [
-    {"slug": "shangchengqu", "name": "上城区"},
-    {"slug": "gongshuqu", "name": "拱墅区"},
-    {"slug": "xihuqu4", "name": "西湖区"},
-    {"slug": "binjiangqu", "name": "滨江区"},
-    {"slug": "xiaoshanqu", "name": "萧山区"},
-    {"slug": "yuhangqu", "name": "余杭区"},
-    {"slug": "linpingqu", "name": "临平区"},
-    {"slug": "qiantangqu", "name": "钱塘区"},
-    {"slug": "fuyangqu", "name": "富阳区"},
-    {"slug": "linanqu", "name": "临安区"},
-    {"slug": "jiandeshi", "name": "建德市"},
-    {"slug": "tongluxian", "name": "桐庐县"},
-    {"slug": "chunanxian", "name": "淳安县"},
-    {"slug": "hainingshi", "name": "海宁市"},
-]
+# 区域表：优先 data/site.json 预设；为空时用 /api/discover 从列表页动态解析（全国城市通用）
+DISTRICTS = site_config.districts()
+
+
+def parse_districts(html_text):
+    """从列表页动态解析区域筛选（行政区+商圈），全国城市通用，零硬编码。"""
+    seen = []
+    pattern = r'href="' + re.escape(site_config.list_path()) + r'([a-z0-9]+)/"[^>]*>\s*([^<]{2,8})</a>'
+    for match in re.finditer(pattern, html_text):
+        slug = match.group(1)
+        name = _normalize_line(match.group(2))
+        if not name or re.match(r"^(pg|rp|l|rco|rt)\d", slug):
+            continue
+        if (slug, name) not in seen:
+            seen.append((slug, name))
+    return [{"slug": slug, "name": name} for slug, name in seen]
 
 # 价格档位（rp token 实测自站点筛选栏）
 PRICE_TIERS = [
@@ -80,11 +84,11 @@ SORTS = {
 
 
 class LoginRequiredError(RuntimeError):
-    """目标页面返回了贝壳登录页（匿名请求触发了登录墙/风控）。"""
+    """目标页面返回了登录页（匿名请求触发了登录墙/风控）。"""
 
 
 class CaptchaError(RuntimeError):
-    """命中贝壳人机验证页：必须立即停止，改由人工或浏览器扩展通道。"""
+    """命中目标站点人机验证页：必须立即停止，改由人工或浏览器扩展通道。"""
 
 
 class RiskControlError(RuntimeError):
@@ -97,7 +101,7 @@ _OPENER = None
 
 def build_list_url(district="", page=1, price_tier=None, rooms=None,
                    rent_type="", keyword="", sort=""):
-    """按筛选条件构造 hz.zu.ke.com 列表页 URL。
+    """按筛选条件构造目标站点列表页 URL（站点根来自配置层）。
 
     token 拼接顺序遵循站点惯例：[区域]/[pg页码][rt方式][rp价格][l居室][排序][rs关键词]/
     """
@@ -120,11 +124,11 @@ def build_list_url(district="", page=1, price_tier=None, rooms=None,
         tokens += "rs" + quote(str(keyword).strip())
     if tokens:
         path += tokens + "/"
-    return BASE_URL + path
+    return base_url() + path
 
 
 def is_login_page(html_text):
-    """判断响应是否为贝壳 passport 登录页。"""
+    """判断响应是否为目标站点 passport 登录页。"""
     head = (html_text or "")[:4000]
     return "ke-passport" in head and "<title>登录</title>" in head
 
@@ -140,7 +144,7 @@ def is_verify_page(html_text):
 
 
 def is_waf_page(html_text):
-    """贝壳 WAF 拦截页（403 Forbidden / 访问已被拦截）。"""
+    """目标站点 WAF 拦截页（403 Forbidden / 访问已被拦截）。"""
     head = (html_text or "")[:2000]
     return "<title>Forbidden</title>" in head and "访问已被拦截" in head
 
@@ -215,18 +219,18 @@ def fetch(url, cookie="", timeout=DEFAULT_TIMEOUT, referer="", max_attempts=3):
             raise
     if is_login_page(html_text):
         raise LoginRequiredError(
-            "页面要求登录（贝壳对分页/筛选/详情页有登录墙）。"
+            "页面要求登录（目标站点对分页/筛选/详情页有登录墙）。"
             "请在 local-service/data/cookie.txt 或检索面板中提供已登录浏览器的 Cookie，"
             "或改用浏览器扩展在已登录页面内采集。"
         )
     if is_verify_page(html_text):
         raise CaptchaError(
-            "命中贝壳人机验证页：立即停止自动抓取。"
+            "命中目标站点人机验证页：立即停止自动抓取。"
             "请稍后重试、降低频率，或改用浏览器扩展在人工会话内采集。"
         )
     if is_waf_page(html_text):
         raise RiskControlError(
-            "命中贝壳 WAF 拦截（403 访问已被拦截）：频率过高被风控。"
+            "命中目标站点 WAF 拦截（403 访问已被拦截）：频率过高被风控。"
             "请降低并发/加大间隔后重试。"
         )
     return html_text
@@ -360,7 +364,7 @@ def parse_list_item(block):
 
     return {
         "source": "ke",
-        "url": BASE_URL + href,
+        "url": base_url() + href,
         "house_code": house_code,
         "title": title,
         "rent_type": rent_type,

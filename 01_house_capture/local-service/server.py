@@ -1,4 +1,4 @@
-"""租房本地服务：接收浏览器扩展采集的贝壳房源、提供服务端在线检索、
+"""租房本地服务：接收浏览器扩展采集的房源、提供服务端在线检索、
 以 SQLite + JSONL 双写存储，并托管前端画廊页面。
 
 启动：python server.py（或 run.cmd / run.sh）
@@ -18,6 +18,7 @@ import threading
 import time
 
 import crawler
+import site_config
 import vision
 
 HOST = "127.0.0.1"
@@ -300,7 +301,7 @@ def read_saved_cookie():
 
 
 def run_crawl(payload):
-    """服务端在线检索：抓取 hz.zu.ke.com 列表页并入库。
+    """服务端在线检索：抓取目标站点列表页并入库（站点/城市来自配置层）。
 
     防护：同一时刻只允许一个检索任务（锁），两次启动间隔 >= MIN_CRAWL_INTERVAL；
     登录墙/人机验证/限流分别返回可操作的错误码，绝不静默重试硬撞。
@@ -448,6 +449,16 @@ class Handler(BaseHTTPRequestHandler):
                 "hasCookie": bool(read_saved_cookie()),
             })
             return
+        if path == "/api/discover":
+            try:
+                html_text = crawler.fetch(crawler.base_url() + site_config.list_path())
+                page = crawler.parse_list_page(html_text)
+                self.send_json(200, {"ok": True, "city": site_config.city_name() or "configured",
+                                     "districts": crawler.parse_districts(html_text),
+                                     "total": page["total"]})
+            except Exception as error:
+                self.send_json(409, {"ok": False, "error": f"{type(error).__name__}: {str(error)[:160]}"})
+            return
         if path == "/health":
             self.send_json(200, {"ok": True, "db": str(DB_PATH), "jsonl": str(JSONL_PATH)})
             return
@@ -516,7 +527,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 html_text = crawler.fetch(row["url"], cookie=cookie,
-                                          referer="https://hz.zu.ke.com/zufang/")
+                                          referer=site_config.referer())
             except Exception as error:
                 self.send_json(409, {"ok": False, "error": "detail_fetch_failed",
                                      "message": str(error)[:200]})
